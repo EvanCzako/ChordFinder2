@@ -1,13 +1,13 @@
-import type { Component } from 'solid-js';
+import type { Component } from "solid-js";
 
-import WhiteKey from './components/whiteKey';
-import styles from './App.module.css';
+import WhiteKey from "./components/whiteKey";
+import styles from "./App.module.css";
 
 const App: Component = () => {
   return (
     <div class={styles.App}>
-      <WhiteKey/>
-      <WhiteKey/>
+      <WhiteKey />
+      <WhiteKey />
     </div>
   );
 };

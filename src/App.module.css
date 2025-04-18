@@ -5,11 +5,29 @@
 }
 
 .whiteKey {
-  color: orange;
+  background-color: white;
   font-size: medium;
+  height: 100px;
+  width: 50px;
+  display: inline-block;
+  margin: 5px;
 }
 
 .whiteKey:hover {
   cursor: pointer;
-  color:blueviolet
+  background-color: rgb(161, 161, 161);
+}
+
+.whiteKeyPressed {
+  background-color: rgb(255, 0, 255);
+  font-size: medium;
+  height: 100px;
+  width: 50px;
+  display: inline-block;
+  margin: 5px;
+}
+
+.whiteKeyPressed:hover {
+  cursor: pointer;
+  background-color: rgb(240, 103, 255);
 }

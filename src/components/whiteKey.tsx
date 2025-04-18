@@ -1,12 +1,18 @@
-import type { Component } from 'solid-js';
+import { Component, createSignal, Show } from "solid-js";
 
-import styles from '../App.module.css';
+import styles from "../App.module.css";
 
 const WhiteKey: Component = () => {
+  
+  const [pressed, setPressed] = createSignal(false);
+
   return (
-    <div class={styles.whiteKey} on:click={() => console.log("YO")}>
-      OOOOO
-    </div>
+    <Show
+    when={!pressed()}
+    fallback={<div class={styles.whiteKeyPressed} on:click={() => {setPressed(!pressed());}}></div>}
+    >
+      <div class={styles.whiteKey} on:click={() => {setPressed(!pressed());}}></div>
+    </Show>
   );
 };
 
