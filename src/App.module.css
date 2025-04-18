@@ -1,35 +1,35 @@
 .App {
-  text-align: left;
-  color: white;
-  /* background-color: black; */
+    text-align: left;
+    color: white;
+    /* background-color: black; */
 }
 
 .whiteKey {
-  background-color: white;
-  font-size: medium;
-  height: 100px;
-  width: 50px;
-  display: inline-block;
-  margin: 5px;
-  border-radius: 3px;
+    background-color: white;
+    font-size: medium;
+    height: 100px;
+    width: 50px;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
 }
 
 .whiteKey:hover {
-  cursor: pointer;
-  background-color: rgb(161, 161, 161);
+    cursor: pointer;
+    background-color: rgb(161, 161, 161);
 }
 
 .whiteKeyPressed {
-  background-color: rgb(255, 0, 255);
-  font-size: medium;
-  height: 100px;
-  width: 50px;
-  display: inline-block;
-  margin: 5px;
-  border-radius: 3px;
+    background-color: rgb(255, 0, 255);
+    font-size: medium;
+    height: 100px;
+    width: 50px;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
 }
 
 .whiteKeyPressed:hover {
-  cursor: pointer;
-  background-color: rgb(240, 103, 255);
+    cursor: pointer;
+    background-color: rgb(240, 103, 255);
 }
