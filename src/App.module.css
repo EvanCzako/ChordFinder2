@@ -1,0 +1,15 @@
+.App {
+  text-align: left;
+  color: white;
+  /* background-color: black; */
+}
+
+.whiteKey {
+  color: orange;
+  font-size: medium;
+}
+
+.whiteKey:hover {
+  cursor: pointer;
+  color:blueviolet
+}
