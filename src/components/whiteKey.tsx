@@ -4,7 +4,7 @@ import styles from "../App.module.css";
 
 const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
     const [pressed, setPressed] = createSignal(false);
-	const [store, {addNotePressed, removeNotePressed}] = useStore() as any;
+    const [store, { addNotePressed, removeNotePressed }] = useStore() as any;
 
     return (
         <Show
@@ -14,20 +14,24 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
                     class={styles.whiteKeyPressed}
                     on:click={() => {
                         setPressed(false);
-						removeNotePressed(props.note);
-						console.log(store.notesPressed);
+                        removeNotePressed(props.note);
+                        console.log(store.notesPressed);
                     }}
-                >{props.note}</div>
+                >
+                    {props.note}
+                </div>
             }
         >
             <div
                 class={styles.whiteKey}
                 on:click={() => {
                     setPressed(true);
-					addNotePressed(props.note);
-					console.log(store.notesPressed);
+                    addNotePressed(props.note);
+                    console.log(store.notesPressed);
                 }}
-            >{props.note}</div>
+            >
+                {props.note}
+            </div>
         </Show>
     );
 };

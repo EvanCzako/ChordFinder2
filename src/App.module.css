@@ -33,3 +33,8 @@
     cursor: pointer;
     background-color: rgb(240, 103, 255);
 }
+
+.chordInfo {
+	color: orange;
+	font-size: xx-large;
+}

@@ -8,12 +8,12 @@ const OctaveContainer: Component<{ octaveIdx: number }> = (props: {
     return (
         <div>
             <WhiteKey note={`C${props.octaveIdx}`} />
-			<WhiteKey note={`D${props.octaveIdx}`} />
-			<WhiteKey note={`E${props.octaveIdx}`} />
-			<WhiteKey note={`F${props.octaveIdx}`} />
-			<WhiteKey note={`G${props.octaveIdx}`} />
-			<WhiteKey note={`A${props.octaveIdx}`} />
-			<WhiteKey note={`B${props.octaveIdx}`} />
+            <WhiteKey note={`D${props.octaveIdx}`} />
+            <WhiteKey note={`E${props.octaveIdx}`} />
+            <WhiteKey note={`F${props.octaveIdx}`} />
+            <WhiteKey note={`G${props.octaveIdx}`} />
+            <WhiteKey note={`A${props.octaveIdx}`} />
+            <WhiteKey note={`B${props.octaveIdx}`} />
         </div>
     );
 };
