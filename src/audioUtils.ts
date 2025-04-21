@@ -18,6 +18,10 @@ let audioObjs: AudioGlobals = {
 	volume: 100
 }
 
+const keyArrSharps = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+const keyArrFlats = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const keyArr = keyArrFlats;
+
 const freqMap: FreqKeyMap = {
 	"C3":  130.81,
 	"C#3":  138.59,
@@ -106,9 +110,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false, lowNote?: st
 	possibleChords: string[],
 	mostLikely?: string
 } {
-
-	console.log(chordNotes);
-	console.log(chordNotes[0]);
     
     let notesSharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
     let notesFlats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']
@@ -118,6 +119,9 @@ function getChordInfo(chordNotes: string[], flats: boolean = false, lowNote?: st
     } else {
         notesArr = notesSharps;
     }
+
+	chordNotes = sortNotesArr(chordNotes);
+	console.log(chordNotes);
 
     let possibleChords: string[] = [];
 
@@ -657,6 +661,50 @@ function eqSet(xs: any, ys: any){
         [...xs].every((x) => ys.has(x));
 }
 
+function getFlatFromSharp(note: string): string {
+    return keyArrFlats[keyArrSharps.indexOf(note.slice(0,note.length-1))] + note[note.length-1];
+}
+
+function sortNotesArr(notesArr: string[]): string[] {
+    if(notesArr.length <= 1){
+        return [...notesArr];
+    }
+    let midpoint = Math.floor(notesArr.length/2);
+    let left = notesArr.slice(0,midpoint);
+    let right = notesArr.slice(midpoint,notesArr.length);
+    return mergeSortedArrays(sortNotesArr(left),sortNotesArr(right),noteCompare);
+}
+
+function noteCompare(note1: string, note2: string){
+    // Returns 1 if note2 is higher (up to octave 9)
+    let octave1 = parseInt(note1.slice(note1.length - 1, note1.length));
+    let octave2 = parseInt(note2.slice(note2.length - 1, note2.length));
+    if (octave1 < octave2){
+        return 1;
+    } else if (octave1 > octave2){
+        return -1;
+    } else {
+        if (keyArr.indexOf(note1.slice(0, note1.length - 1)) < keyArr.indexOf(note2.slice(0, note2.length - 1))){
+            return 1;
+        } else if (keyArr.indexOf(note1.slice(0, note1.length - 1)) > keyArr.indexOf(note2.slice(0, note2.length - 1))) {
+            return -1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+function mergeSortedArrays(arr1: any, arr2: any, compFunc: any){
+    let merged = [];
+    while(arr1.length > 0 && arr2.length > 0){
+        if(compFunc(arr1[0],arr2[0]) === 1){
+            merged.push(arr1.shift());
+        } else {
+            merged.push(arr2.shift());
+        }
+    }
+    return merged.concat(arr1).concat(arr2);
+}
 
 export {
 	refreshAudio,
