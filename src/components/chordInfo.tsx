@@ -10,9 +10,7 @@ const ChordInfoContainer: Component = (props: {
 
 	const [store, { addNotePressed, removeNotePressed }] = useStore() as any;
 	const chordInfo = () => audioUtils.getChordInfo(
-		store.notesPressed.map((note: string) => {
-			return note.slice(0,note.length-1);
-		})
+		store.notesPressed
 	);
 	const mostLikely = () => chordInfo().mostLikely;
 	const possibleChords = () => chordInfo().possibleChords;

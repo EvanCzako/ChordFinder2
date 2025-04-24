@@ -15,7 +15,7 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
                     on:click={() => {
                         setPressed(false);
                         removeNotePressed(props.note);
-                        console.log(store.notesPressed);
+                        // console.log(store.notesPressed);
                     }}
                 >
                     {props.note}
@@ -27,7 +27,7 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
                 on:click={() => {
                     setPressed(true);
                     addNotePressed(props.note);
-                    console.log(store.notesPressed);
+                    // console.log(store.notesPressed);
                 }}
             >
                 {props.note}

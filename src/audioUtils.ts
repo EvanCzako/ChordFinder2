@@ -106,7 +106,7 @@ const refreshAudio = (keysPressed: string[], volume: number) => {
 
 
 
-function getChordInfo(chordNotes: string[], flats: boolean = false, lowNote?: string): {
+function getChordInfo(chordNotes: string[], flats: boolean = false): {
 	possibleChords: string[],
 	mostLikely?: string
 } {
@@ -120,8 +120,11 @@ function getChordInfo(chordNotes: string[], flats: boolean = false, lowNote?: st
         notesArr = notesSharps;
     }
 
-	chordNotes = sortNotesArr(chordNotes);
-	console.log(chordNotes);
+	chordNotes = sortNotesArr(chordNotes).map((noteWithOctave: string) => {
+		return noteWithOctave.slice(0, noteWithOctave.length-1);
+	});
+
+	const lowNote = chordNotes[0];
 
     let possibleChords: string[] = [];
 
@@ -136,6 +139,8 @@ function getChordInfo(chordNotes: string[], flats: boolean = false, lowNote?: st
         }
     }
 
+	console.log(chordNotes);
+	console.log(chordNotesIndices);
 
     let checkList = Array.from(chordNotesIndices);
     let tempSet;
