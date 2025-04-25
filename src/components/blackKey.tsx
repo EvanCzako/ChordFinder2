@@ -2,7 +2,7 @@ import { Component, createSignal, Show } from "solid-js";
 import { useStore } from "./storeProvider";
 import styles from "../App.module.css";
 
-const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
+const blackKey: Component<{ note: string }> = (props: { note: string }) => {
     const [pressed, setPressed] = createSignal(false);
     const [store, { addNotePressed, removeNotePressed }] = useStore() as any;
 
@@ -11,27 +11,25 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
             when={!pressed()}
             fallback={
                 <div
-                    class={styles.whiteKeyPressed}
+                    class={styles.blackKeyPressed}
                     on:click={() => {
                         setPressed(false);
                         removeNotePressed(props.note);
                     }}
                 >
-                    {/* {props.note} */}
                 </div>
             }
         >
             <div
-                class={styles.whiteKey}
+                class={styles.blackKey}
                 on:click={() => {
                     setPressed(true);
                     addNotePressed(props.note);
                 }}
             >
-                {/* {props.note} */}
             </div>
         </Show>
     );
 };
 
-export default WhiteKey;
+export default blackKey;

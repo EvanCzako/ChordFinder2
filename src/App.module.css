@@ -7,7 +7,7 @@
 .whiteKey {
     background-color: white;
     font-size: medium;
-    height: 100px;
+    height: 200px;
     width: 50px;
     display: inline-block;
     margin: 5px;
@@ -22,7 +22,7 @@
 .whiteKeyPressed {
     background-color: rgb(255, 0, 255);
     font-size: medium;
-    height: 100px;
+    height: 200px;
     width: 50px;
     display: inline-block;
     margin: 5px;
@@ -34,7 +34,81 @@
     background-color: rgb(240, 103, 255);
 }
 
+
+
+.blackKey {
+    background-color: rgb(40, 40, 40);
+    font-size: medium;
+    height: 100px;
+    width: 50px;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
+	pointer-events: all;
+}
+
+.blackKey:hover {
+    cursor: pointer;
+    background-color: rgb(72, 72, 72);
+}
+
+.blackKeyPressed {
+    background-color: rgb(255, 0, 255);
+    font-size: medium;
+    height: 100px;
+    width: 50px;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
+	pointer-events: all;
+}
+
+.blackKeyPressed:hover {
+    cursor: pointer;
+    background-color: rgb(240, 103, 255);
+}
+
+.fakeKey {
+    background-color: rgb(40, 40, 40);
+    font-size: medium;
+    height: 100px;
+    width: 50px;
+    display: inline-block;
+    margin: 5px;
+    border-radius: 3px;
+	visibility: hidden;
+	z-index: -5;
+	
+}
+
+
+.blackKeyContainer {
+	/* display: inline-block; */
+	position: relative;
+	left: 30px;
+	top: 0px;
+	z-index: 2;
+	pointer-events: none;
+}
+
+.whiteKeyContainer {
+	/* display: inline-block; */
+	position: relative;
+	left: 0px;
+	top: -70px;
+	z-index: 1;
+}
+
+.octaveContainer {
+	display: inline-block;
+}
+
+.pianoContainer {
+	/* display: inline-block; */
+}
+
 .chordInfo {
 	color: orange;
 	font-size: xx-large;
 }
+

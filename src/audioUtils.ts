@@ -139,9 +139,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         }
     }
 
-	console.log(chordNotes);
-	console.log(chordNotesIndices);
-
     let checkList = Array.from(chordNotesIndices);
     let tempSet;
 

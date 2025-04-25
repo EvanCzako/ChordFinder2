@@ -1,4 +1,4 @@
-import { Component, createSignal, Show } from "solid-js";
+import { Component, createSignal, Show, For } from "solid-js";
 import { useStore } from "./storeProvider";
 import WhiteKey from "./whiteKey";
 import * as audioUtils from "../audioUtils";
@@ -17,9 +17,13 @@ const ChordInfoContainer: Component = (props: {
 
     return (
         <div class={styles.chordInfo}>
-			{store.notesPressed}
-			{mostLikely()}
-			{possibleChords()}
+			<div>{store.notesPressed}</div>
+			<div>{mostLikely()}</div>
+			<For each={possibleChords()}>{(chord, i) =>
+				<div>
+					{chord}
+				</div>
+			}</For>
         </div>
     );
 };
