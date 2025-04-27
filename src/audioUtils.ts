@@ -480,7 +480,7 @@ const clearAudioNodes: () => void = () => {
 	audioObjs.oscs = [];
 }
 
-const refreshAudio = (keysPressed: string[], volume: number) => {
+const refreshAudio = (keysPressed: string[], volume: number, muted: boolean) => {
 
 	initFilters();
 	clearAudioNodes();
@@ -498,14 +498,16 @@ const refreshAudio = (keysPressed: string[], volume: number) => {
         audioObjs.oscs.push(osc);
     }
 
+	const muteFactor = muted ? 0 : 1;
 	for (let i = 0; i < keysPressed.length; i += 1) {
-		audioObjs.gainNodes[i].gain.value = volume*0.7/(keysPressed.length+1);
+		audioObjs.gainNodes[i].gain.value = muteFactor*volume*0.7/(keysPressed.length+1);
 	}
 }
 
-function refreshVolume(newVolume: number){
+function refreshVolume(newVolume: number, muted: boolean){
+	const muteFactor = muted ? 0 : 1;
 	for (let i = 0; i < audioObjs.gainNodes.length; i += 1) {
-		audioObjs.gainNodes[i].gain.value = newVolume*0.7/(audioObjs.gainNodes.length+1);
+		audioObjs.gainNodes[i].gain.value = muteFactor*newVolume*0.7/(audioObjs.gainNodes.length+1);
 	}
 }
 

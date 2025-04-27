@@ -4,7 +4,8 @@ import styles from "../App.module.css";
 
 const Controls: Component<{}> = (props: {}) => {
 
-	const [store, { addNotePressed, removeNotePressed, adjustVolume }] = useStore() as any;
+	const [store, { addNotePressed, removeNotePressed, adjustVolume, setMuted }] = useStore() as any;
+	const [localMuted, setLocalMuted] = createSignal(false);
 
 	let volumeSlider: HTMLInputElement | undefined;
 
@@ -12,9 +13,12 @@ const Controls: Component<{}> = (props: {}) => {
 		<div>
 			<input type="range" ref={volumeSlider} value={100} min={0} max={100} on:input={() => {
 				if(volumeSlider){
-					adjustVolume(parseFloat(volumeSlider.value) * 0.01)
-					console.log(store);
+					adjustVolume(parseFloat(volumeSlider.value) * 0.01);
 				}
+			}}/>
+			<input type="checkbox" on:change={() => {
+				setLocalMuted(!localMuted());
+				setMuted(localMuted());
 			}}/>
 		</div>
     );
