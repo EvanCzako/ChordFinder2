@@ -45,6 +45,14 @@ export function StoreProvider(props: any) {
 		audioUtils.refreshAudio(appState.notesPressed, appState.volume, appState.muted);
     };
 
+	const clearAllNotes = () => {
+		setAppState({
+			...appState,
+			notesPressed: []
+		});
+		audioUtils.refreshAudio(appState.notesPressed, appState.volume, appState.muted);
+	}
+
 	const adjustVolume = (volume: number) => {
 		setAppState({
 			...appState,
@@ -66,6 +74,7 @@ export function StoreProvider(props: any) {
         {
             addNotePressed,
             removeNotePressed,
+			clearAllNotes,
 			adjustVolume,
 			setMuted
         },

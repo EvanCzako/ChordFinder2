@@ -4,7 +4,7 @@ import styles from "../App.module.css";
 
 const Controls: Component<{}> = (props: {}) => {
 
-	const [store, { addNotePressed, removeNotePressed, adjustVolume, setMuted }] = useStore() as any;
+	const [store, { clearAllNotes, adjustVolume, setMuted }] = useStore() as any;
 	const [localMuted, setLocalMuted] = createSignal(false);
 
 	let volumeSlider: HTMLInputElement | undefined;
@@ -20,6 +20,7 @@ const Controls: Component<{}> = (props: {}) => {
 				setLocalMuted(!localMuted());
 				setMuted(localMuted());
 			}}/>
+			<button on:click={() => {clearAllNotes();}}>Clear Notes</button>
 		</div>
     );
 };
