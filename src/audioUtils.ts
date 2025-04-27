@@ -62,107 +62,31 @@ const freqMap: FreqKeyMap = {
 	"C6": 1046.50,
 }
 
-const initFilters: () => void = () => {
-    audioObjs.lpFilter = audioObjs.audioCtx.createBiquadFilter();
-    audioObjs.lpFilter.type = 'lowpass';
-    audioObjs.lpFilter.frequency.value = 800;
-    audioObjs.lpFilter.Q.value = 5;
-    audioObjs.lpFilter.connect(audioObjs.audioCtx.destination);
-};
+let allChordSets;
 
-const clearAudioNodes: () => void = () => {
-	audioObjs.gainNodes.forEach((gainNode: GainNode) => {
-		gainNode.disconnect();
-	});
-	audioObjs.gainNodes = [];
-	audioObjs.oscs.forEach((oscNode: OscillatorNode) => {
-		oscNode.disconnect();
-	})
-	audioObjs.oscs = [];
-}
+// All courtesy of ME, yo. You're welcome. - Evan Czako
 
-const refreshAudio = (keysPressed: string[], volume: number) => {
-
-	initFilters();
-	clearAudioNodes();
-
-	for (let i = 0; i < keysPressed.length; i += 1){
-        let gainNode = audioObjs.audioCtx.createGain();
-        audioObjs.gainNodes.push(gainNode);
-        gainNode.gain.value = 0;
-        gainNode.connect(audioObjs.lpFilter as BiquadFilterNode);
-        let osc  =  audioObjs.audioCtx.createOscillator();
-        osc.type = 'sawtooth';
-        osc.frequency.value = freqMap[keysPressed[i]];
-        osc.connect(gainNode);
-        osc.start();
-        audioObjs.oscs.push(osc);
-    }
-
-	for (let i = 0; i < keysPressed.length; i += 1) {
-		audioObjs.gainNodes[i].gain.value = volume*0.7/(keysPressed.length+1);
-	}
-}
-
-function refreshVolume(newVolume: number){
-	for (let i = 0; i < audioObjs.gainNodes.length; i += 1) {
-		audioObjs.gainNodes[i].gain.value = newVolume*0.7/(audioObjs.gainNodes.length+1);
-	}
-}
-
-function getChordInfo(chordNotes: string[], flats: boolean = false): {
-	possibleChords: string[],
-	mostLikely?: string
-} {
+const getAllChordSets = () => {
     
-    let notesSharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
-    let notesFlats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']
-    let notesArr;
-    if(flats){
-        notesArr = notesFlats;
-    } else {
-        notesArr = notesSharps;
-    }
+	// Quick Memoization
 
-	chordNotes = sortNotesArr(chordNotes).map((noteWithOctave: string) => {
-		return noteWithOctave.slice(0, noteWithOctave.length-1);
-	});
+	if (allChordSets){
+		return allChordSets;
+	}
 
-	const lowNote = chordNotes[0];
+	//   ### Power Chord ###
 
-    let possibleChords: string[] = [];
+    let powerChordSet = {
+		set: new Set([0,7]),
+		name: "Power"
+	};
 
-    let chordNotesIndices: Set<number> = new Set();
+	let powerTypes = [
+		powerChordSet
+	];
 
-    for(let i = 0; i < chordNotes.length; i += 1){
-        let note = chordNotes[i];
-        if(notesSharps.includes(note)){
-            chordNotesIndices.add(notesSharps.indexOf(note));
-        } else if (notesFlats.includes(note)){
-            chordNotesIndices.add(notesFlats.indexOf(note));
-        }
-    }
+	    //   ### Major Chords ###
 
-    let checkList = Array.from(chordNotesIndices);
-    let tempSet;
-
-    //   ### Power Chord ###
-    let powerChordSet = new Set([0,7]);
-
-    for(let k = 0; k < 12; k += 1){
-        tempSet = new Set();
-        for(let i = 0; i < checkList.length; i += 1){
-            tempSet.add((checkList[i]+k)%12);
-        }
-        if(eqSet(tempSet,powerChordSet)){
-            possibleChords.push(notesArr[(12 - k) % 12] + " PowerChord");
-            break;
-        }
-    }
-
-
-
-    //   ### Major Chords ###
     let majSet = {
         set: new Set([0,4]),
         name: "Maj"
@@ -237,22 +161,8 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         maj7Add13Set
     ];
 
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for(let i = 0; i < majTypes.length; i += 1){
-            if (eqSet(tempSet, majTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${majTypes[i].name}`);
-            }
-        }
-    }
-
-
-
     //   ### Minor Chords ###
+
     let minSet = {
         set: new Set([0, 3]),
         name: "min"
@@ -317,21 +227,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         min7Add11Set,
     ];
 
-
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for (let i = 0; i < minTypes.length; i += 1) {
-            if (eqSet(tempSet, minTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${minTypes[i].name}`);
-            }
-        }
-    }
-
-
     // ### Dominant Chords ###
 
     let dom7Set = {
@@ -387,20 +282,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         dom9b5Set,
         alteredSet,
     ];
-
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for (let i = 0; i < domTypes.length; i += 1) {
-            if (eqSet(tempSet, domTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${domTypes[i].name}`);
-            }
-        }
-    }
-
 
     // ### Sus Chords ###
 
@@ -458,23 +339,7 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         sus4b9Set
     ];
 
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for (let i = 0; i < susTypes.length; i += 1) {
-            if (eqSet(tempSet, susTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${susTypes[i].name}`);
-            }
-        }
-    }
-
-
-
     // ### Dim Chords ###
-
 
     let dimSet = {
         set: new Set([0, 3, 6]),
@@ -494,21 +359,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         halfDimSet,
         fullDimSet,
     ];
-
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for (let i = 0; i < dimTypes.length; i += 1) {
-            if (eqSet(tempSet, dimTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${dimTypes[i].name}`);
-            }
-        }
-    }
-
-
 
     // ### MinMaj Chords ###
 
@@ -532,23 +382,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         minMaj9b13Set,
     ];
 
-
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for (let i = 0; i < minMajTypes.length; i += 1) {
-            if (eqSet(tempSet, minMajTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${minMajTypes[i].name}`);
-            }
-        }
-    }
-
-
-
-
     // ### Aug Chords ###
 
     let augSet = {
@@ -569,21 +402,6 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         aug7Set,
         augMaj7Set,
     ];
-
-
-    for (let k = 0; k < 12; k += 1) {
-        tempSet = new Set();
-        for (let i = 0; i < checkList.length; i += 1) {
-            tempSet.add((checkList[i] + k) % 12);
-        }
-        tempSet.delete(7);
-        for (let i = 0; i < augTypes.length; i += 1) {
-            if (eqSet(tempSet, augTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${augTypes[i].name}`);
-            }
-        }
-    }
-
 
     // ### b5 and #11 Chords ###
 
@@ -626,23 +444,213 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
         majAddSharp11Set,
     ];
 
+	return {
+		powerTypes,
+		majTypes,
+		minTypes,
+		domTypes,
+		susTypes,
+		augTypes,
+		minMajTypes,
+		dimTypes,
+		otherTypes
+	}
 
-    for (let k = 0; k < 12; k += 1) {
+}
+
+const notesSharps = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
+const notesFlats = ['A', 'Bb', 'B', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab']
+
+const initFilters: () => void = () => {
+    audioObjs.lpFilter = audioObjs.audioCtx.createBiquadFilter();
+    audioObjs.lpFilter.type = 'lowpass';
+    audioObjs.lpFilter.frequency.value = 800;
+    audioObjs.lpFilter.Q.value = 5;
+    audioObjs.lpFilter.connect(audioObjs.audioCtx.destination);
+};
+
+const clearAudioNodes: () => void = () => {
+	audioObjs.gainNodes.forEach((gainNode: GainNode) => {
+		gainNode.disconnect();
+	});
+	audioObjs.gainNodes = [];
+	audioObjs.oscs.forEach((oscNode: OscillatorNode) => {
+		oscNode.disconnect();
+	})
+	audioObjs.oscs = [];
+}
+
+const refreshAudio = (keysPressed: string[], volume: number) => {
+
+	initFilters();
+	clearAudioNodes();
+
+	for (let i = 0; i < keysPressed.length; i += 1){
+        let gainNode = audioObjs.audioCtx.createGain();
+        audioObjs.gainNodes.push(gainNode);
+        gainNode.gain.value = 0;
+        gainNode.connect(audioObjs.lpFilter as BiquadFilterNode);
+        let osc  =  audioObjs.audioCtx.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.value = freqMap[keysPressed[i]];
+        osc.connect(gainNode);
+        osc.start();
+        audioObjs.oscs.push(osc);
+    }
+
+	for (let i = 0; i < keysPressed.length; i += 1) {
+		audioObjs.gainNodes[i].gain.value = volume*0.7/(keysPressed.length+1);
+	}
+}
+
+function refreshVolume(newVolume: number){
+	for (let i = 0; i < audioObjs.gainNodes.length; i += 1) {
+		audioObjs.gainNodes[i].gain.value = newVolume*0.7/(audioObjs.gainNodes.length+1);
+	}
+}
+
+
+
+function getChordInfo(chordNotes: string[], flats: boolean = false): {
+	possibleChords: string[],
+	mostLikely?: string
+} {
+    
+	const allChords = getAllChordSets();
+
+    let notesArr;
+    if(flats){
+        notesArr = notesFlats;
+    } else {
+        notesArr = notesSharps;
+    }
+
+	chordNotes = sortNotesArr(chordNotes).map((noteWithOctave: string) => {
+		return noteWithOctave.slice(0, noteWithOctave.length-1);
+	});
+
+	const lowNote = chordNotes[0];
+
+    let possibleChords: string[] = [];
+
+    let chordNotesIndices: Set<number> = new Set();
+
+    for(let i = 0; i < chordNotes.length; i += 1){
+        let note = chordNotes[i];
+        if(notesSharps.includes(note)){
+            chordNotesIndices.add(notesSharps.indexOf(note));
+        } else if (notesFlats.includes(note)){
+            chordNotesIndices.add(notesFlats.indexOf(note));
+        }
+    }
+
+    let checkList = Array.from(chordNotesIndices);
+    let tempSet;
+
+    for(let k = 0; k < 12; k += 1){
+
+        tempSet = new Set();
+        for(let i = 0; i < checkList.length; i += 1){
+            tempSet.add((checkList[i]+k)%12);
+        }
+        tempSet.delete(7);
+        for(let i = 0; i < allChords.powerTypes.length; i += 1){
+            if (eqSet(tempSet, allChords.powerTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.powerTypes[i].name}`);
+            }
+        }
+
         tempSet = new Set();
         for (let i = 0; i < checkList.length; i += 1) {
             tempSet.add((checkList[i] + k) % 12);
         }
         tempSet.delete(7);
-        for (let i = 0; i < otherTypes.length; i += 1) {
-            if (eqSet(tempSet, otherTypes[i].set)) {
-                possibleChords.push(notesArr[(12 - k) % 12] + ` ${otherTypes[i].name}`);
+        for(let i = 0; i < allChords.majTypes.length; i += 1){
+            if (eqSet(tempSet, allChords.majTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.majTypes[i].name}`);
+            }
+        }
+
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.minTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.minTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.minTypes[i].name}`);
+            }
+        }
+
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.domTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.domTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.domTypes[i].name}`);
+            }
+        }
+
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.susTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.susTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.susTypes[i].name}`);
+            }
+        }
+
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.dimTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.dimTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.dimTypes[i].name}`);
+            }
+        }
+
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.minMajTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.minMajTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.minMajTypes[i].name}`);
+            }
+        }
+ 
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.augTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.augTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.augTypes[i].name}`);
+            }
+        }
+
+        tempSet = new Set();
+        for (let i = 0; i < checkList.length; i += 1) {
+            tempSet.add((checkList[i] + k) % 12);
+        }
+        tempSet.delete(7);
+        for (let i = 0; i < allChords.otherTypes.length; i += 1) {
+            if (eqSet(tempSet, allChords.otherTypes[i].set)) {
+                possibleChords.push(notesArr[(12 - k) % 12] + ` ${allChords.otherTypes[i].name}`);
             }
         }
     }
 
     let mostLikely;
     
-
     if(possibleChords.length === 1){
         mostLikely = possibleChords[0];
         possibleChords = [];
