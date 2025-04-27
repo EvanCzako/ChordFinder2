@@ -9,12 +9,16 @@ export function StoreProvider(props: any) {
 		chordInfo: {
 			mostLikely?: string,
 			possibleChords: string[]
-		}
+		},
+		sharps: boolean,
+		volume: number
 	 }>({
         notesPressed: [],
 		chordInfo: {
 			possibleChords: []
-		}
+		},
+		sharps: true,
+		volume: 1
     });
 
     const addNotePressed = (note: string) => {
@@ -22,8 +26,7 @@ export function StoreProvider(props: any) {
             ...appState,
             notesPressed: [...appState.notesPressed, note],
         });
-		// console.log(audioUtils.getChordInfo(appState.notesPressed));
-		audioUtils.refreshAudio(appState.notesPressed, 1);
+		audioUtils.refreshAudio(appState.notesPressed, appState.volume);
     };
 
     const removeNotePressed = (note: string) => {
@@ -37,14 +40,23 @@ export function StoreProvider(props: any) {
                 ],
             });
         }
-		audioUtils.refreshAudio(appState.notesPressed, 1);
+		audioUtils.refreshAudio(appState.notesPressed, appState.volume);
     };
+
+	const adjustVolume = (volume: number) => {
+		setAppState({
+			...appState,
+			volume
+		});
+		audioUtils.refreshVolume(appState.volume);
+	}
 
     const store = [
         appState,
         {
             addNotePressed,
             removeNotePressed,
+			adjustVolume
         },
     ];
 

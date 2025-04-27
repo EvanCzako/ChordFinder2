@@ -104,7 +104,11 @@ const refreshAudio = (keysPressed: string[], volume: number) => {
 	}
 }
 
-
+function refreshVolume(newVolume: number){
+	for (let i = 0; i < audioObjs.gainNodes.length; i += 1) {
+		audioObjs.gainNodes[i].gain.value = newVolume*0.7/(audioObjs.gainNodes.length+1);
+	}
+}
 
 function getChordInfo(chordNotes: string[], flats: boolean = false): {
 	possibleChords: string[],
@@ -710,5 +714,6 @@ function mergeSortedArrays(arr1: any, arr2: any, compFunc: any){
 
 export {
 	refreshAudio,
+	refreshVolume,
 	getChordInfo
 }
