@@ -528,7 +528,12 @@ function getChordInfo(chordNotes: string[], flats: boolean = false): {
     }
 
 	chordNotes = sortNotesArr(chordNotes).map((noteWithOctave: string) => {
-		return noteWithOctave.slice(0, noteWithOctave.length-1);
+		if(flats){
+			return getFlatFromSharpNoOctave(noteWithOctave.slice(0, noteWithOctave.length-1));
+		} else {
+			return noteWithOctave.slice(0, noteWithOctave.length-1);
+		}
+		
 	});
 
 	const lowNote = chordNotes[0];
@@ -681,6 +686,10 @@ function getFlatFromSharp(note: string): string {
     return keyArrFlats[keyArrSharps.indexOf(note.slice(0,note.length-1))] + note[note.length-1];
 }
 
+function getFlatFromSharpNoOctave(note: string): string {
+	return keyArrFlats[keyArrSharps.indexOf(note)];
+}
+
 function sortNotesArr(notesArr: string[]): string[] {
     if(notesArr.length <= 1){
         return [...notesArr];
@@ -725,5 +734,6 @@ function mergeSortedArrays(arr1: any, arr2: any, compFunc: any){
 export {
 	refreshAudio,
 	refreshVolume,
-	getChordInfo
+	getChordInfo,
+	getFlatFromSharp
 }

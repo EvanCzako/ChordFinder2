@@ -5,6 +5,7 @@ const StoreContext = createContext();
 
 export type AppStateType = {
 	notesPressed: string[],
+	notesPressedFlats: string[],
 	chordInfo: {
 		mostLikely?: string,
 		possibleChords: string[]
@@ -17,6 +18,7 @@ export type AppStateType = {
 export function StoreProvider(props: any) {
     const [appState, setAppState] = createStore<AppStateType>({
         notesPressed: [],
+		notesPressedFlats: [],
 		chordInfo: {
 			possibleChords: []
 		},
@@ -29,6 +31,7 @@ export function StoreProvider(props: any) {
         setAppState({
             ...appState,
             notesPressed: [...appState.notesPressed, note],
+			notesPressedFlats: [...appState.notesPressedFlats, audioUtils.getFlatFromSharp(note)]
         });
 		audioUtils.refreshAudio(appState.notesPressed, appState.volume, appState.muted);
     };
@@ -42,6 +45,10 @@ export function StoreProvider(props: any) {
                     ...appState.notesPressed.slice(0, noteIdx),
                     ...appState.notesPressed.slice(noteIdx + 1),
                 ],
+				notesPressedFlats: [
+                    ...appState.notesPressedFlats.slice(0, noteIdx),
+                    ...appState.notesPressedFlats.slice(noteIdx + 1),
+                ],
             });
         }
 		audioUtils.refreshAudio(appState.notesPressed, appState.volume, appState.muted);
@@ -50,7 +57,8 @@ export function StoreProvider(props: any) {
 	const clearAllNotes = () => {
 		setAppState({
 			...appState,
-			notesPressed: []
+			notesPressed: [],
+			notesPressedFlats: []
 		});
 		audioUtils.refreshAudio(appState.notesPressed, appState.volume, appState.muted);
 	}
@@ -71,6 +79,13 @@ export function StoreProvider(props: any) {
 		audioUtils.refreshVolume(appState.volume, appState.muted)
 	}
 
+	const setSharps = (sharps: boolean) => {
+		setAppState({
+			...appState,
+			sharps
+		});
+	}
+
     const store = [
         appState,
         {
@@ -78,7 +93,8 @@ export function StoreProvider(props: any) {
             removeNotePressed,
 			clearAllNotes,
 			adjustVolume,
-			setMuted
+			setMuted,
+			setSharps
         },
     ];
 
