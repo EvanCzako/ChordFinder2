@@ -14,12 +14,9 @@ const ChordInfoContainer: Component = (props: {
 		!store.sharps
 	));
 	const displayNotes = createMemo(() => {
-		let notes = [];
-		if(store.sharps){
-			return store.notesPressed;
-		} else {
-			return store.notesPressedFlats;
-		}
+		let notes = store.sharps ? store.notesPressed : store.notesPressedFlats;
+		const dispNotes = notes.map((note: string) => note + ",").join(" ").slice(0,-1);
+		return dispNotes;
 	})
 	const mostLikely = () => chordInfo().mostLikely;
 	const possibleChords = () => chordInfo().possibleChords;
