@@ -1,10 +1,13 @@
-import { Component, createSignal, Show } from "solid-js";
-import { useStore } from "./storeProvider";
+import { Component, createSignal, createMemo, Show } from "solid-js";
+import { useStore, AppStateType } from "./storeProvider";
 import styles from "../App.module.css";
 
 const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
-    const [pressed, setPressed] = createSignal(false);
-    const [store, { addNotePressed, removeNotePressed }] = useStore() as any;
+
+    const [store, { addNotePressed, removeNotePressed }] = useStore() as [AppStateType, any];
+	const pressed = createMemo(() => {
+		return store.notesPressed.includes(props.note);
+	});
 
     return (
         <Show
@@ -13,22 +16,18 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
                 <div
                     class={styles.whiteKeyPressed}
                     on:click={() => {
-                        setPressed(false);
                         removeNotePressed(props.note);
                     }}
                 >
-                    {/* {props.note} */}
                 </div>
             }
         >
             <div
                 class={styles.whiteKey}
                 on:click={() => {
-                    setPressed(true);
                     addNotePressed(props.note);
                 }}
             >
-                {/* {props.note} */}
             </div>
         </Show>
     );

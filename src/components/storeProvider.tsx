@@ -3,17 +3,19 @@ import { createStore } from "solid-js/store";
 import * as audioUtils from "../audioUtils";
 const StoreContext = createContext();
 
+export type AppStateType = {
+	notesPressed: string[],
+	chordInfo: {
+		mostLikely?: string,
+		possibleChords: string[]
+	},
+	sharps: boolean,
+	volume: number,
+	muted: boolean
+}
+
 export function StoreProvider(props: any) {
-    const [appState, setAppState] = createStore<{ 
-		notesPressed: string[],
-		chordInfo: {
-			mostLikely?: string,
-			possibleChords: string[]
-		},
-		sharps: boolean,
-		volume: number,
-		muted: boolean
-	 }>({
+    const [appState, setAppState] = createStore<AppStateType>({
         notesPressed: [],
 		chordInfo: {
 			possibleChords: []
