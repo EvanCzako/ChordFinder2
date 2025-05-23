@@ -22,11 +22,22 @@ const ChordInfoContainer: Component = (props: {}) => {
 
     return (
         <div class={styles.chordInfo}>
-            <div>{displayNotes()}</div>
-            <div>{mostLikely()}</div>
-            <For each={possibleChords()}>
-                {(chord, i) => <div>{chord}</div>}
-            </For>
+			<Show when={displayNotes().length > 0}>
+				Notes pressed:
+				<div>{displayNotes()}</div>
+			</Show>
+			<Show when={mostLikely()}>
+				<div class={styles.mostLikely}>Most Likely: {mostLikely()}</div>
+			</Show>
+			<Show when={possibleChords().length > 0}>
+				<div class={styles.possibleChords}>
+					Possible chords:
+					<For each={possibleChords()}>
+						{(chord, i) => <div>{chord}</div>}
+					</For>
+				</div>
+			</Show>
+
         </div>
     );
 };

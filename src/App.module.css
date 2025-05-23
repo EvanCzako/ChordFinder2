@@ -140,3 +140,13 @@
 	accent-color: rgb(167, 53, 255);
 	position: relative;
 }
+
+.mostLikely {
+	color: rgb(255, 53, 255);
+	font-size: 55px;
+}
+
+.possibleChords {
+	color: rgb(179, 69, 234);
+	font-size: 40px;
+}
