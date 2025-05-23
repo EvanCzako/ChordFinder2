@@ -34,8 +34,6 @@
     background-color: rgb(240, 103, 255);
 }
 
-
-
 .blackKey {
     background-color: rgb(40, 40, 40);
     font-size: medium;
@@ -44,7 +42,7 @@
     display: inline-block;
     margin: 5px;
     border-radius: 3px;
-	pointer-events: all;
+    pointer-events: all;
 }
 
 .blackKey:hover {
@@ -60,7 +58,7 @@
     display: inline-block;
     margin: 5px;
     border-radius: 3px;
-	pointer-events: all;
+    pointer-events: all;
 }
 
 .blackKeyPressed:hover {
@@ -76,39 +74,36 @@
     display: inline-block;
     margin: 5px;
     border-radius: 3px;
-	visibility: hidden;
-	z-index: -5;
-	
+    visibility: hidden;
+    z-index: -5;
 }
 
-
 .blackKeyContainer {
-	/* display: inline-block; */
-	position: relative;
-	left: 30px;
-	top: 0px;
-	z-index: 2;
-	pointer-events: none;
+    /* display: inline-block; */
+    position: relative;
+    left: 30px;
+    top: 0px;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .whiteKeyContainer {
-	/* display: inline-block; */
-	position: relative;
-	left: 0px;
-	top: -70px;
-	z-index: 1;
+    /* display: inline-block; */
+    position: relative;
+    left: 0px;
+    top: -70px;
+    z-index: 1;
 }
 
 .octaveContainer {
-	display: inline-block;
+    display: inline-block;
 }
 
 .pianoContainer {
-	/* display: inline-block; */
+    /* display: inline-block; */
 }
 
 .chordInfo {
-	color: orange;
-	font-size: xx-large;
+    color: orange;
+    font-size: xx-large;
 }
-

@@ -8,24 +8,24 @@ const OctaveContainer: Component<{ octaveIdx: number }> = (props: {
 }) => {
     return (
         <div class={styles.octaveContainer}>
-			<div class={styles.blackKeyContainer}>
-				<BlackKey note={`C#${props.octaveIdx}`} />
-				<BlackKey note={`D#${props.octaveIdx}`} />
-				<div class={styles.fakeKey} id="E#"></div>
-				<BlackKey note={`F#${props.octaveIdx}`} />
-				<BlackKey note={`G#${props.octaveIdx}`} />
-				<BlackKey note={`A#${props.octaveIdx}`} />
-				<div class={styles.fakeKey} id="B#"></div>
-			</div>
-			<div class={styles.whiteKeyContainer}>
-				<WhiteKey note={`C${props.octaveIdx}`} />
-				<WhiteKey note={`D${props.octaveIdx}`} />
-				<WhiteKey note={`E${props.octaveIdx}`} />
-				<WhiteKey note={`F${props.octaveIdx}`} />
-				<WhiteKey note={`G${props.octaveIdx}`} />
-				<WhiteKey note={`A${props.octaveIdx}`} />
-				<WhiteKey note={`B${props.octaveIdx}`} />
-			</div>
+            <div class={styles.blackKeyContainer}>
+                <BlackKey note={`C#${props.octaveIdx}`} />
+                <BlackKey note={`D#${props.octaveIdx}`} />
+                <div class={styles.fakeKey} id="E#"></div>
+                <BlackKey note={`F#${props.octaveIdx}`} />
+                <BlackKey note={`G#${props.octaveIdx}`} />
+                <BlackKey note={`A#${props.octaveIdx}`} />
+                <div class={styles.fakeKey} id="B#"></div>
+            </div>
+            <div class={styles.whiteKeyContainer}>
+                <WhiteKey note={`C${props.octaveIdx}`} />
+                <WhiteKey note={`D${props.octaveIdx}`} />
+                <WhiteKey note={`E${props.octaveIdx}`} />
+                <WhiteKey note={`F${props.octaveIdx}`} />
+                <WhiteKey note={`G${props.octaveIdx}`} />
+                <WhiteKey note={`A${props.octaveIdx}`} />
+                <WhiteKey note={`B${props.octaveIdx}`} />
+            </div>
         </div>
     );
 };

@@ -3,11 +3,13 @@ import { useStore, AppStateType } from "./storeProvider";
 import styles from "../App.module.css";
 
 const blackKey: Component<{ note: string }> = (props: { note: string }) => {
-
-	const [store, { addNotePressed, removeNotePressed }] = useStore() as [AppStateType, any];
-	const pressed = createMemo(() => {
-		return store.notesPressed.includes(props.note);
-	});
+    const [store, { addNotePressed, removeNotePressed }] = useStore() as [
+        AppStateType,
+        any,
+    ];
+    const pressed = createMemo(() => {
+        return store.notesPressed.includes(props.note);
+    });
 
     return (
         <Show
@@ -18,8 +20,7 @@ const blackKey: Component<{ note: string }> = (props: { note: string }) => {
                     on:click={() => {
                         removeNotePressed(props.note);
                     }}
-                >
-                </div>
+                ></div>
             }
         >
             <div
@@ -27,8 +28,7 @@ const blackKey: Component<{ note: string }> = (props: { note: string }) => {
                 on:click={() => {
                     addNotePressed(props.note);
                 }}
-            >
-            </div>
+            ></div>
         </Show>
     );
 };

@@ -13,13 +13,12 @@ import styles from "./App.module.css";
 import * as audioUtils from "./audioUtils";
 
 const App: Component = () => {
-
     return (
         <StoreProvider>
             <div class={styles.App}>
-				<Controls/>
-				<PianoComponent/>
-				<ChordInfoContainer/>
+                <Controls />
+                <PianoComponent />
+                <ChordInfoContainer />
             </div>
         </StoreProvider>
     );
