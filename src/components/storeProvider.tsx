@@ -13,6 +13,7 @@ export type AppStateType = {
     sharps: boolean;
     volume: number;
     muted: boolean;
+	midiMode: boolean;
 };
 
 export function StoreProvider(props: any) {
@@ -25,6 +26,7 @@ export function StoreProvider(props: any) {
         sharps: true,
         volume: 1,
         muted: false,
+		midiMode: false
     });
 
     const addNotePressed = (note: string) => {
@@ -101,6 +103,13 @@ export function StoreProvider(props: any) {
         });
     };
 
+	const setMidiMode = (midiMode: boolean) => {
+		setAppState({
+			...appState,
+			midiMode
+		})
+	}
+
     const store = [
         appState,
         {
@@ -110,6 +119,7 @@ export function StoreProvider(props: any) {
             adjustVolume,
             setMuted,
             setSharps,
+			setMidiMode
         },
     ];
 

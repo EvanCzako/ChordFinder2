@@ -13,16 +13,19 @@ const Controls: Component<{}> = (props: {}) => {
             setSharps,
             addNotePressed,
             removeNotePressed,
+			setMidiMode
         },
     ] = useStore() as any;
     const [localMuted, setLocalMuted] = createSignal(false);
     const [localSharps, setLocalSharps] = createSignal(true);
 
     let volumeSlider: HTMLInputElement | undefined;
+	let midiCheckbox: HTMLInputElement | undefined;
 
     const doMIDIStuff = () => {
         const navigator = window.navigator;
-        let midi = null; // global MIDIAccess object
+        let midi: any = null; // global MIDIAccess object
+		let initialized: boolean = false;
         function onMIDISuccess(midiAccess: any) {
             console.log("MIDI ready!");
             midi = midiAccess; // store in the global (in real usage, would probably keep in an object instance)
@@ -55,30 +58,54 @@ const Controls: Component<{}> = (props: {}) => {
         }
 
         function onMIDIMessage(event: any) {
-            let str = `MIDI message received at timestamp ${event.timeStamp}[${event.data.length} bytes]: `;
-            let str2 = "";
-            for (const character of event.data) {
-                str2 += `0x${character.toString(16)} `;
-            }
-            str += str2;
-            if (str2 !== "0xf8 ") {
-                const note = audioUtils.freqArr[parseInt(event.data.slice(1))];
-                const noteVol = parseInt(event.data[2]);
-                if (noteVol > 0) {
-					// 
-                } else {
-                    // removeNotePressed;
-                }
-            }
+			if(store.midiMode){
+				let str = `MIDI message received at timestamp ${event.timeStamp}[${event.data.length} bytes]: `;
+				let str2 = "";
+				for (const character of event.data) {
+					str2 += `0x${character.toString(16)} `;
+				}
+				str += str2;
+				if (str2 !== "0xf8 ") {
+					const note = audioUtils.freqArr[parseInt(event.data.slice(1))];
+					const noteVol = parseInt(event.data[2]);
+					if (noteVol > 0) {
+						addNotePressed(note);
+					} else {
+						removeNotePressed(note);
+					}
+				}
+			}
         }
 
         function startLoggingMIDIInput(midiAccess: any) {
-            midiAccess.inputs.forEach((entry: any) => {
-                entry.onmidimessage = onMIDIMessage;
-            });
+            if(!initialized){
+				midiAccess.inputs.forEach((entry: any) => {
+					entry.onmidimessage = onMIDIMessage;
+				});
+			}
+
+			initialized = true;
         }
-        navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+        
+		const runMidiStuff = (): void => {
+			navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+		}
+
+		const cancelMidiStuff = (): void => {
+			// May not be necessary to implement for now
+		}
+
+		return {
+			runMidiStuff,
+			cancelMidiStuff
+		}
+
     };
+
+	const {
+		runMidiStuff,
+		cancelMidiStuff
+	} = doMIDIStuff();
 
     return (
         <div>
@@ -116,13 +143,25 @@ const Controls: Component<{}> = (props: {}) => {
             >
                 Clear Notes
             </button>
-            <button
-                on:click={() => {
-                    doMIDIStuff();
+
+			<input
+                type="checkbox"
+                checked={store.midiMode}
+				ref={midiCheckbox}
+                on:change={() => {
+					if(midiCheckbox){
+						if(midiCheckbox.checked){
+							setMidiMode(true);
+							clearAllNotes();
+							runMidiStuff();
+						} else {
+							setMidiMode(false);
+							cancelMidiStuff();
+							clearAllNotes();
+						}
+					}
                 }}
-            >
-                MIDI
-            </button>
+            />
         </div>
     );
 };
