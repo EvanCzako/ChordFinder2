@@ -109,34 +109,46 @@ const Controls: Component<{}> = (props: {}) => {
 
     return (
         <div>
-            <input
-                type="range"
-                ref={volumeSlider}
-                value={100}
-                min={0}
-                max={100}
-                on:input={() => {
-                    if (volumeSlider) {
-                        adjustVolume(parseFloat(volumeSlider.value) * 0.01);
-                    }
-                }}
-            />
-            <input
-                type="checkbox"
-                on:change={() => {
-                    setLocalMuted(!localMuted());
-                    setMuted(localMuted());
-                }}
-            />
-            <input
-                type="checkbox"
-                checked={localSharps()}
-                on:change={() => {
-                    setLocalSharps(!localSharps());
-                    setSharps(localSharps());
-                }}
-            />
-            <button
+			<div class={styles.controlsText}>
+				Volume 
+				<input class={styles.controlsSlider}
+					type="range"
+					ref={volumeSlider}
+					value={100}
+					min={0}
+					max={100}
+					on:input={() => {
+						if (volumeSlider) {
+							adjustVolume(parseFloat(volumeSlider.value) * 0.01);
+						}
+					}}
+				/>
+			</div>
+
+			<div class={styles.controlsText}>
+				Muted 
+				<input class={styles.controlsCheckbox}
+					type="checkbox"
+					on:change={() => {
+						setLocalMuted(!localMuted());
+						setMuted(localMuted());
+					}}
+				/>
+			</div>
+
+			<div class={styles.controlsText}>
+				Sharps 
+				<input class={styles.controlsCheckbox}
+					type="checkbox"
+					checked={localSharps()}
+					on:change={() => {
+						setLocalSharps(!localSharps());
+						setSharps(localSharps());
+					}}
+				/>
+			</div>
+
+            <button class={styles.controlsButton}
                 on:click={() => {
                     clearAllNotes();
                 }}
@@ -144,24 +156,28 @@ const Controls: Component<{}> = (props: {}) => {
                 Clear Notes
             </button>
 
-			<input
-                type="checkbox"
-                checked={store.midiMode}
-				ref={midiCheckbox}
-                on:change={() => {
-					if(midiCheckbox){
-						if(midiCheckbox.checked){
-							setMidiMode(true);
-							clearAllNotes();
-							runMidiStuff();
-						} else {
-							setMidiMode(false);
-							cancelMidiStuff();
-							clearAllNotes();
+			<div class={styles.controlsText}>
+				Use MIDI 
+				<input class={styles.controlsCheckbox}
+					type="checkbox"
+					checked={store.midiMode}
+					ref={midiCheckbox}
+					on:change={() => {
+						if(midiCheckbox){
+							if(midiCheckbox.checked){
+								setMidiMode(true);
+								clearAllNotes();
+								runMidiStuff();
+							} else {
+								setMidiMode(false);
+								cancelMidiStuff();
+								clearAllNotes();
+							}
 						}
-					}
-                }}
-            />
+					}}
+				/>
+			</div>
+
         </div>
     );
 };

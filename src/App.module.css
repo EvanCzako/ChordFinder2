@@ -43,6 +43,8 @@
     margin: 5px;
     border-radius: 3px;
     pointer-events: all;
+	position: relative;
+	top: 40px;
 }
 
 .blackKey:hover {
@@ -59,6 +61,8 @@
     margin: 5px;
     border-radius: 3px;
     pointer-events: all;
+	position: relative;
+	top: 40px;
 }
 
 .blackKeyPressed:hover {
@@ -106,4 +110,33 @@
 .chordInfo {
     color: orange;
     font-size: xx-large;
+}
+
+.controlsText {
+	font-size: x-large;
+	color: rgb(255, 202, 103);
+	font-style: bold;
+	padding: 3px;
+}
+
+.controlsButton {
+	background-color: rgb(163, 36, 226);
+	color: rgb(226, 226, 226);
+	font-size: large;
+	height: 33px;
+	width: 133px;
+	border-radius: 10px;
+}
+
+.controlsCheckbox {
+	accent-color: rgb(229, 145, 81);
+	transform: scale(1.5);
+	padding-left: 5px;
+	bottom: 2px;
+	position: relative;
+}
+
+.controlsSlider {
+	accent-color: rgb(167, 53, 255);
+	position: relative;
 }
