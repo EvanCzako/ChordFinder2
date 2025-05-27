@@ -7,12 +7,14 @@
         "start": "vite",
         "dev": "vite",
         "build": "vite build",
-        "serve": "vite preview"
+        "serve": "vite preview",
+		"deploy": "vite build && gh-pages -d dist"
     },
     "license": "MIT",
     "devDependencies": {
         "@eslint/js": "^9.27.0",
         "eslint": "^9.27.0",
+        "gh-pages": "^6.3.0",
         "globals": "^16.1.0",
         "lint": "^0.8.19",
         "prettier": "3.5.3",
