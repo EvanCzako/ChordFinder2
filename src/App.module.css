@@ -1,152 +1,157 @@
-.App {
-    text-align: left;
-    color: white;
-    /* background-color: black; */
+@media only screen and (min-width: 600px) {
+
+	.App {
+		text-align: left;
+		color: white;
+		/* background-color: black; */
+	}
+
+	.whiteKey {
+		background-color: white;
+		font-size: medium;
+		height: 200px;
+		width: 50px;
+		display: inline-block;
+		margin: 5px;
+		border-radius: 3px;
+	}
+
+	.whiteKey:hover {
+		cursor: pointer;
+		background-color: rgb(161, 161, 161);
+	}
+
+	.whiteKeyPressed {
+		background-color: rgb(255, 0, 255);
+		font-size: medium;
+		height: 200px;
+		width: 50px;
+		display: inline-block;
+		margin: 5px;
+		border-radius: 3px;
+	}
+
+	.whiteKeyPressed:hover {
+		cursor: pointer;
+		background-color: rgb(240, 103, 255);
+	}
+
+	.blackKey {
+		background-color: rgb(40, 40, 40);
+		font-size: medium;
+		height: 100px;
+		width: 50px;
+		display: inline-block;
+		margin: 5px;
+		border-radius: 3px;
+		pointer-events: all;
+		position: relative;
+		top: 40px;
+	}
+
+	.blackKey:hover {
+		cursor: pointer;
+		background-color: rgb(72, 72, 72);
+	}
+
+	.blackKeyPressed {
+		background-color: rgb(255, 0, 255);
+		font-size: medium;
+		height: 100px;
+		width: 50px;
+		display: inline-block;
+		margin: 5px;
+		border-radius: 3px;
+		pointer-events: all;
+		position: relative;
+		top: 40px;
+	}
+
+	.blackKeyPressed:hover {
+		cursor: pointer;
+		background-color: rgb(240, 103, 255);
+	}
+
+	.fakeKey {
+		background-color: rgb(40, 40, 40);
+		font-size: medium;
+		height: 100px;
+		width: 50px;
+		display: inline-block;
+		margin: 5px;
+		border-radius: 3px;
+		visibility: hidden;
+		z-index: -5;
+	}
+
+	.blackKeyContainer {
+		/* display: inline-block; */
+		position: relative;
+		left: 30px;
+		top: 0px;
+		z-index: 2;
+		pointer-events: none;
+	}
+
+	.whiteKeyContainer {
+		/* display: inline-block; */
+		position: relative;
+		left: 0px;
+		top: -70px;
+		z-index: 1;
+	}
+
+	.octaveContainer {
+		display: inline-block;
+	}
+
+	.pianoContainer {
+		/* display: inline-block; */
+	}
+
+	.chordInfo {
+		color: orange;
+		font-size: xx-large;
+	}
+
+	.controlsText {
+		font-size: xx-large;
+		color: rgb(255, 202, 103);
+		font-style: bold;
+		padding: 3px;
+	}
+
+	.controlsButton {
+		background-color: rgb(163, 36, 226);
+		color: rgb(226, 226, 226);
+		font-size: large;
+		height: 33px;
+		width: 133px;
+		border-radius: 10px;
+	}
+
+	.controlsCheckbox {
+		accent-color: rgb(229, 145, 81);
+		transform: scale(1.5);
+		padding-left: 5px;
+		bottom: 2px;
+		position: relative;
+	}
+
+	.controlsSlider {
+		accent-color: rgb(167, 53, 255);
+		position: relative;
+	}
+
+	.mostLikely {
+		color: rgb(255, 53, 255);
+		font-size: 55px;
+	}
+
+	.possibleChords {
+		color: rgb(179, 69, 234);
+		font-size: 40px;
+	}
+
 }
 
-.whiteKey {
-    background-color: white;
-    font-size: medium;
-    height: 200px;
-    width: 50px;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 3px;
-}
-
-.whiteKey:hover {
-    cursor: pointer;
-    background-color: rgb(161, 161, 161);
-}
-
-.whiteKeyPressed {
-    background-color: rgb(255, 0, 255);
-    font-size: medium;
-    height: 200px;
-    width: 50px;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 3px;
-}
-
-.whiteKeyPressed:hover {
-    cursor: pointer;
-    background-color: rgb(240, 103, 255);
-}
-
-.blackKey {
-    background-color: rgb(40, 40, 40);
-    font-size: medium;
-    height: 100px;
-    width: 50px;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 3px;
-    pointer-events: all;
-	position: relative;
-	top: 40px;
-}
-
-.blackKey:hover {
-    cursor: pointer;
-    background-color: rgb(72, 72, 72);
-}
-
-.blackKeyPressed {
-    background-color: rgb(255, 0, 255);
-    font-size: medium;
-    height: 100px;
-    width: 50px;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 3px;
-    pointer-events: all;
-	position: relative;
-	top: 40px;
-}
-
-.blackKeyPressed:hover {
-    cursor: pointer;
-    background-color: rgb(240, 103, 255);
-}
-
-.fakeKey {
-    background-color: rgb(40, 40, 40);
-    font-size: medium;
-    height: 100px;
-    width: 50px;
-    display: inline-block;
-    margin: 5px;
-    border-radius: 3px;
-    visibility: hidden;
-    z-index: -5;
-}
-
-.blackKeyContainer {
-    /* display: inline-block; */
-    position: relative;
-    left: 30px;
-    top: 0px;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.whiteKeyContainer {
-    /* display: inline-block; */
-    position: relative;
-    left: 0px;
-    top: -70px;
-    z-index: 1;
-}
-
-.octaveContainer {
-    display: inline-block;
-}
-
-.pianoContainer {
-    /* display: inline-block; */
-}
-
-.chordInfo {
-    color: orange;
-    font-size: xx-large;
-}
-
-.controlsText {
-	font-size: xx-large;
-	color: rgb(255, 202, 103);
-	font-style: bold;
-	padding: 3px;
-}
-
-.controlsButton {
-	background-color: rgb(163, 36, 226);
-	color: rgb(226, 226, 226);
-	font-size: large;
-	height: 33px;
-	width: 133px;
-	border-radius: 10px;
-}
-
-.controlsCheckbox {
-	accent-color: rgb(229, 145, 81);
-	transform: scale(1.5);
-	padding-left: 5px;
-	bottom: 2px;
-	position: relative;
-}
-
-.controlsSlider {
-	accent-color: rgb(167, 53, 255);
-	position: relative;
-}
-
-.mostLikely {
-	color: rgb(255, 53, 255);
-	font-size: 55px;
-}
-
-.possibleChords {
-	color: rgb(179, 69, 234);
-	font-size: 40px;
-}
