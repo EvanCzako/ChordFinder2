@@ -4,16 +4,18 @@
 		text-align: left;
 		color: white;
 		/* background-color: black; */
+		position: fixed;
+		width: 100%;
+		height: 100%;
 	}
 
 	.whiteKey {
 		background-color: white;
-		font-size: medium;
-		height: 200px;
-		width: 50px;
+		width: 100%;
+		height: 100%;
 		display: inline-block;
-		margin: 5px;
 		border-radius: 3px;
+		pointer-events: all;
 	}
 
 	.whiteKey:hover {
@@ -23,12 +25,11 @@
 
 	.whiteKeyPressed {
 		background-color: rgb(255, 0, 255);
-		font-size: medium;
-		height: 200px;
-		width: 50px;
+		height: 100%;
+		width: 100%;
 		display: inline-block;
-		margin: 5px;
 		border-radius: 3px;
+		pointer-events: all;
 	}
 
 	.whiteKeyPressed:hover {
@@ -38,15 +39,11 @@
 
 	.blackKey {
 		background-color: rgb(40, 40, 40);
-		font-size: medium;
-		height: 100px;
-		width: 50px;
+		width: 100%;
+		height: 50%;
 		display: inline-block;
-		margin: 5px;
 		border-radius: 3px;
 		pointer-events: all;
-		position: relative;
-		top: 40px;
 	}
 
 	.blackKey:hover {
@@ -56,15 +53,11 @@
 
 	.blackKeyPressed {
 		background-color: rgb(255, 0, 255);
-		font-size: medium;
-		height: 100px;
-		width: 50px;
+		height: 50%;
+		width: 100%;
 		display: inline-block;
-		margin: 5px;
 		border-radius: 3px;
 		pointer-events: all;
-		position: relative;
-		top: 40px;
 	}
 
 	.blackKeyPressed:hover {
@@ -74,44 +67,62 @@
 
 	.fakeKey {
 		background-color: rgb(40, 40, 40);
-		font-size: medium;
-		height: 100px;
-		width: 50px;
+		width: 100%;
+		height: 100%;
 		display: inline-block;
-		margin: 5px;
 		border-radius: 3px;
+		pointer-events: all;
 		visibility: hidden;
 		z-index: -5;
 	}
 
 	.blackKeyContainer {
-		/* display: inline-block; */
-		position: relative;
-		left: 30px;
-		top: 0px;
+		position: absolute;
+		height: 100%;
+		width: 100%;
 		z-index: 2;
 		pointer-events: none;
+		display: flex;
 	}
 
 	.whiteKeyContainer {
-		/* display: inline-block; */
-		position: relative;
-		left: 0px;
-		top: -70px;
+		position: absolute;
+		height: 100%;
+		width: 100%;
 		z-index: 1;
+		pointer-events: none;
+		display: flex;
 	}
 
 	.octaveContainer {
-		display: inline-block;
+		height: 100%;
+		width: 100%;
+		position: relative;
 	}
 
 	.pianoContainer {
-		/* display: inline-block; */
+		position: absolute;
+		display: flex;
+		justify-content: space-evenly;
+		width: 100%;
+		height: 33%;
+		top: 33%
 	}
 
 	.chordInfo {
 		color: orange;
 		font-size: xx-large;
+		position: absolute;
+		height: 33%;
+		width: 100%;
+		top: 66%;
+
+	}
+
+	.controlsContainer {
+		position: absolute;
+		height: 33%;
+		width: 100%;
 	}
 
 	.controlsText {
@@ -135,12 +146,12 @@
 		transform: scale(1.5);
 		padding-left: 5px;
 		bottom: 2px;
-		position: relative;
+		position: absolute;
 	}
 
 	.controlsSlider {
 		accent-color: rgb(167, 53, 255);
-		position: relative;
+		position: absolute;
 	}
 
 	.mostLikely {

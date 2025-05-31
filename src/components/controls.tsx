@@ -108,7 +108,7 @@ const Controls: Component<{}> = (props: {}) => {
 	} = doMIDIStuff();
 
     return (
-        <div>
+        <div class={styles.controlsContainer}>
 			<div class={styles.controlsText}>
 				Volume 
 				<input class={styles.controlsSlider}
