@@ -21,16 +21,16 @@ const ChordInfoContainer: Component = (props: {}) => {
     const possibleChords = () => chordInfo().possibleChords;
 
     return (
-        <div style={{"font-size": `${store.dispSize/1.3}px`,}} class={styles.chordInfo}>
+        <div style={{"font-size": `${store.dispSize}px`,}} class={styles.chordInfo}>
 			<Show when={displayNotes().length > 0}>
 				Notes pressed:
 				<div>{displayNotes()}</div>
 			</Show>
 			<Show when={mostLikely()}>
-				<div class={styles.mostLikely}>Most Likely: {mostLikely()}</div>
+				<div class={styles.mostLikely} style={{"font-size": `${store.dispSize*1.2}px`,}}>Most Likely: {mostLikely()}</div>
 			</Show>
 			<Show when={possibleChords().length > 0}>
-				<div class={styles.possibleChords}>
+				<div class={styles.possibleChords} style={{"font-size": `${store.dispSize}px`,}}>
 					Possible chords:
 					<For each={possibleChords()}>
 						{(chord, i) => <div>{chord}</div>}
