@@ -14,8 +14,9 @@
 		width: 100%;
 		height: 100%;
 		display: inline-block;
-		border-radius: 3px;
+		border-radius: 3%;
 		pointer-events: all;
+		margin: 1%;
 	}
 
 	.whiteKey:hover {
@@ -25,11 +26,12 @@
 
 	.whiteKeyPressed {
 		background-color: rgb(255, 0, 255);
-		height: 100%;
 		width: 100%;
+		height: 100%;
 		display: inline-block;
-		border-radius: 3px;
+		border-radius: 3%;
 		pointer-events: all;
+		margin: 1%;
 	}
 
 	.whiteKeyPressed:hover {
@@ -42,8 +44,9 @@
 		width: 100%;
 		height: 50%;
 		display: inline-block;
-		border-radius: 3px;
+		border-radius: 3%;
 		pointer-events: all;
+		margin: 1%;
 	}
 
 	.blackKey:hover {
@@ -53,11 +56,12 @@
 
 	.blackKeyPressed {
 		background-color: rgb(255, 0, 255);
-		height: 50%;
 		width: 100%;
+		height: 50%;
 		display: inline-block;
-		border-radius: 3px;
+		border-radius: 3%;
 		pointer-events: all;
+		margin: 1%;
 	}
 
 	.blackKeyPressed:hover {
@@ -80,6 +84,7 @@
 		position: absolute;
 		height: 100%;
 		width: 100%;
+		left: 5%;
 		z-index: 2;
 		pointer-events: none;
 		display: flex;
@@ -92,6 +97,7 @@
 		z-index: 1;
 		pointer-events: none;
 		display: flex;
+		justify-content: space-evenly;
 	}
 
 	.octaveContainer {
@@ -105,7 +111,7 @@
 		display: flex;
 		justify-content: space-evenly;
 		width: 100%;
-		height: 33%;
+		height: 29%;
 		top: 33%
 	}
 
@@ -123,10 +129,15 @@
 		position: absolute;
 		height: 33%;
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		font-size: 2.5vw;
 	}
 
 	.controlsText {
-		font-size: xx-large;
+		/* position: relative; */
+		font-size: 100%;
 		color: rgb(255, 202, 103);
 		font-style: bold;
 		padding: 3px;

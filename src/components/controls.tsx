@@ -1,4 +1,4 @@
-import { Component, createSignal, JSXElement, Show } from "solid-js";
+import { Component, createSignal, JSXElement, Show, onMount, onCleanup } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
@@ -107,8 +107,26 @@ const Controls: Component<{}> = (props: {}) => {
 		cancelMidiStuff
 	} = doMIDIStuff();
 
+
+	const [size, setSize] = createSignal(0);
+
+	const updateSize = () => {
+		const vw = window.innerWidth / 100;
+		const vh = window.innerHeight / 100;
+		const product = Math.sqrt(vw * vh);
+		setSize(product*3); // Tweak multiplier as needed
+		console.log(product);
+	};
+
+	onMount(() => {
+		updateSize();
+		window.addEventListener("resize", updateSize);
+		onCleanup(() => window.removeEventListener("resize", updateSize));
+	});
+
+
     return (
-        <div class={styles.controlsContainer}>
+        <div style={{"font-size": `${size()}px`,}} class={styles.controlsContainer}>
 			<div class={styles.controlsText}>
 				Volume 
 				<input class={styles.controlsSlider}

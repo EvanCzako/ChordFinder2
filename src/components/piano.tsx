@@ -9,7 +9,6 @@ const PianoComponent: Component = (props: {}) => {
 
 	const updateWidth = () => {
 		setWidth(window.innerWidth);
-		console.log(dispOctaves());
 	}
 
 	onMount(() => {
@@ -17,8 +16,15 @@ const PianoComponent: Component = (props: {}) => {
 		onCleanup(() => window.removeEventListener('resize', updateWidth));
 	});
 
-	const isSmall = () => width() < 1000; //  "small" threshold
-	const dispOctaves = () => isSmall() ? [4,5] : [2,3,4,5]
+	const dispOctaves = () => {
+		if( width() > 1300) {
+			return [2,3,4,5];
+		} else if (width() > 900 && width() <= 1300){
+			return [3,4,5];
+		} else {
+			return [4,5];
+		}
+	}
 
     return (
         <div class={styles.pianoContainer}>
