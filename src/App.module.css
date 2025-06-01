@@ -144,10 +144,11 @@
 	.controlsButton {
 		background-color: rgb(163, 36, 226);
 		color: rgb(226, 226, 226);
-		height: 20%;
+		/* height: 20%; */
 		width: 10%;
 		border-radius: 10px;
 		margin-left: 1%;
+		font-weight: bold;
 	}
 
 	.controlsCheckbox {
@@ -336,34 +337,39 @@
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
+		font-style: bold;
 	}
 
 	.controlsText {
 		color: rgb(255, 202, 103);
 		font-weight: 800;
 		margin-left: 1%;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.controlsButton {
 		background-color: rgb(163, 36, 226);
 		color: rgb(226, 226, 226);
 		height: 20%;
-		width: 10%;
+		/* width: 50%; */
 		border-radius: 10px;
 		margin-left: 1%;
+		font-weight: bold;
 	}
 
 	.controlsCheckbox {
 		accent-color: rgb(229, 145, 81);
 		/* margin-left: 1%; */
 		/* bottom: 10%; */
+		/* top: 5%; */
 		position: relative;
 	}
 
 	.controlsSlider {
 		accent-color: rgb(167, 53, 255);
 		margin-left: 1%;
-		width: 40%;
+		width: 100%;
 		position: relative;
 	}
 

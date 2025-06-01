@@ -127,7 +127,7 @@ const Controls: Component<{}> = (props: {}) => {
 			</div>
 
 			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
-				Muted 
+				Muted
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
 					on:change={() => {
@@ -150,7 +150,7 @@ const Controls: Component<{}> = (props: {}) => {
 			</div>
 
 			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
-				Use MIDI 
+				MIDI 
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
 					checked={store.midiMode}
@@ -171,7 +171,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<button style={{"font-size": `${store.dispSize/1.5}px`,}} class={styles.controlsButton}
+			<button style={{"font-size": `${store.dispSize/1.5}px`}} class={styles.controlsButton}
                 on:click={() => {
                     clearAllNotes();
                 }}
