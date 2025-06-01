@@ -1,6 +1,7 @@
 import { Component, createSignal, createContext, useContext, onMount, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import * as audioUtils from "../audioUtils";
+import App from "../App";
 const StoreContext = createContext();
 
 export type AppStateType = {
@@ -15,6 +16,7 @@ export type AppStateType = {
     muted: boolean;
 	midiMode: boolean;
 	dispSize: number;
+	layoutMode: string;
 };
 
 export function StoreProvider(props: any) {
@@ -28,7 +30,8 @@ export function StoreProvider(props: any) {
         volume: 1,
         muted: false,
 		midiMode: false,
-		dispSize: 0
+		dispSize: 0,
+		layoutMode: "landscape"
     });
 
     const addNotePressed = (note: string) => {
@@ -115,12 +118,13 @@ export function StoreProvider(props: any) {
 	const updateSize = () => {
 		const vw = window.innerWidth / 100;
 		const vh = window.innerHeight / 100;
+		const layoutMode = vw >= vh ? "landscape" : "portrait";
 		const product = Math.sqrt(vw * vh);
 		setAppState({
 			...appState,
-			dispSize: product*3
-		})
-		console.log(product);
+			dispSize: product*3,
+			layoutMode
+		});
 	};
 
 	onMount(() => {

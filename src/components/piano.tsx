@@ -21,8 +21,10 @@ const PianoComponent: Component = (props: {}) => {
 			return [2,3,4,5];
 		} else if (width() > 900 && width() <= 1300){
 			return [3,4,5];
-		} else {
+		} else if (width() <= 900 && width() > 600) {
 			return [4,5];
+		} else {
+			return [4];
 		}
 	}
 

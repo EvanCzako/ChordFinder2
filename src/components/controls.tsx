@@ -109,8 +109,8 @@ const Controls: Component<{}> = (props: {}) => {
 
 
     return (
-        <div style={{"font-size": `${store.dispSize}px`,}} class={styles.controlsContainer}>
-			<div class={styles.controlsText}>
+        <div class={styles.controlsContainer}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
 				Volume 
 				<input class={styles.controlsSlider}
 					type="range"
@@ -126,7 +126,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<div class={styles.controlsText}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
 				Muted 
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
@@ -137,7 +137,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<div class={styles.controlsText}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
 				Sharps 
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
@@ -149,15 +149,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-            <button style={{"font-size": `${store.dispSize/1.5}px`,}} class={styles.controlsButton}
-                on:click={() => {
-                    clearAllNotes();
-                }}
-            >
-                Clear Notes
-            </button>
-
-			<div class={styles.controlsText}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
 				Use MIDI 
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
@@ -178,6 +170,14 @@ const Controls: Component<{}> = (props: {}) => {
 					}}
 				/>
 			</div>
+
+			<button style={{"font-size": `${store.dispSize/1.5}px`,}} class={styles.controlsButton}
+                on:click={() => {
+                    clearAllNotes();
+                }}
+            >
+                Clear Notes
+            </button>
 
         </div>
     );

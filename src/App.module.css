@@ -1,4 +1,4 @@
-@media only screen and (min-width: 600px) {
+@media (orientation: landscape) {
 
 	.App {
 		text-align: left;
@@ -133,12 +133,11 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
-		font-size: 2.5vw;
 	}
 
 	.controlsText {
 		color: rgb(255, 202, 103);
-		font-style: bold;
+		font-weight: 800;
 		margin-left: 1%;
 	}
 
@@ -161,6 +160,7 @@
 	.controlsSlider {
 		accent-color: rgb(167, 53, 255);
 		margin-left: 1%;
+		width: 15%;
 		position: relative;
 	}
 
@@ -172,5 +172,227 @@
 		color: rgb(179, 69, 234);
 	}
 
+	.headerSection {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.titleContainer {
+		position: absolute;
+		left: 50%;
+		height: 20%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+	}
+
+	.titleName {
+		font-style: bold;
+		font-weight: 800;
+	}
+
 }
 
+/***********************************************************
+/***********************************************************
+/***********************************************************
+/***********************************************************
+/***********************************************************/
+
+@media (orientation: portrait) {
+
+	.App {
+		text-align: left;
+		color: white;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+	}
+
+	.whiteKey {
+		background-color: white;
+		width: 100%;
+		height: 100%;
+		display: inline-block;
+		border-radius: 3%;
+		pointer-events: all;
+		margin: 1%;
+	}
+
+	.whiteKey:hover {
+		cursor: pointer;
+		background-color: rgb(161, 161, 161);
+	}
+
+	.whiteKeyPressed {
+		background-color: rgb(255, 0, 255);
+		width: 100%;
+		height: 100%;
+		display: inline-block;
+		border-radius: 3%;
+		pointer-events: all;
+		margin: 1%;
+	}
+
+	.whiteKeyPressed:hover {
+		cursor: pointer;
+		background-color: rgb(240, 103, 255);
+	}
+
+	.blackKey {
+		background-color: rgb(40, 40, 40);
+		width: 100%;
+		height: 50%;
+		display: inline-block;
+		border-radius: 3%;
+		pointer-events: all;
+		margin: 1%;
+	}
+
+	.blackKey:hover {
+		cursor: pointer;
+		background-color: rgb(72, 72, 72);
+	}
+
+	.blackKeyPressed {
+		background-color: rgb(255, 0, 255);
+		width: 100%;
+		height: 50%;
+		display: inline-block;
+		border-radius: 3%;
+		pointer-events: all;
+		margin: 1%;
+	}
+
+	.blackKeyPressed:hover {
+		cursor: pointer;
+		background-color: rgb(240, 103, 255);
+	}
+
+	.fakeKey {
+		background-color: rgb(40, 40, 40);
+		width: 100%;
+		height: 100%;
+		display: inline-block;
+		pointer-events: all;
+		visibility: hidden;
+		z-index: -5;
+	}
+
+	.blackKeyContainer {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		left: 5%;
+		z-index: 2;
+		pointer-events: none;
+		display: flex;
+	}
+
+	.whiteKeyContainer {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+		pointer-events: none;
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.octaveContainer {
+		height: 100%;
+		width: 100%;
+		position: relative;
+	}
+
+	.pianoContainer {
+		position: absolute;
+		display: flex;
+		justify-content: space-evenly;
+		width: 100%;
+		height: 29%;
+		top: 33%;
+	}
+
+	.chordInfo {
+		color: orange;
+		font-size: xx-large;
+		position: absolute;
+		height: 33%;
+		width: 100%;
+		top: 62%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		margin-left: 1%;
+	}
+
+	.controlsContainer {
+		top: 20%;
+		position: absolute;
+		height: 33%;
+		width: 100%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+	}
+
+	.controlsText {
+		color: rgb(255, 202, 103);
+		font-weight: 800;
+		margin-left: 1%;
+	}
+
+	.controlsButton {
+		background-color: rgb(163, 36, 226);
+		color: rgb(226, 226, 226);
+		height: 20%;
+		width: 10%;
+		border-radius: 10px;
+		margin-left: 1%;
+	}
+
+	.controlsCheckbox {
+		accent-color: rgb(229, 145, 81);
+		/* margin-left: 1%; */
+		/* bottom: 10%; */
+		position: relative;
+	}
+
+	.controlsSlider {
+		accent-color: rgb(167, 53, 255);
+		margin-left: 1%;
+		width: 40%;
+		position: relative;
+	}
+
+	.mostLikely {
+		color: rgb(255, 53, 255);
+	}
+
+	.possibleChords {
+		color: rgb(179, 69, 234);
+	}
+
+	.headerSection {
+		display: flex;
+		justify-content: space-evenly;
+	}
+
+	.titleContainer {
+		position: absolute;
+		margin-top: 2%;
+		margin-left: 2%;
+		height: 10%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+	}
+
+	.titleName {
+		font-style: bold;
+		font-weight: 800;
+	}
+}
