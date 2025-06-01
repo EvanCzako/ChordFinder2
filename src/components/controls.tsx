@@ -108,25 +108,8 @@ const Controls: Component<{}> = (props: {}) => {
 	} = doMIDIStuff();
 
 
-	const [size, setSize] = createSignal(0);
-
-	const updateSize = () => {
-		const vw = window.innerWidth / 100;
-		const vh = window.innerHeight / 100;
-		const product = Math.sqrt(vw * vh);
-		setSize(product*3); // Tweak multiplier as needed
-		console.log(product);
-	};
-
-	onMount(() => {
-		updateSize();
-		window.addEventListener("resize", updateSize);
-		onCleanup(() => window.removeEventListener("resize", updateSize));
-	});
-
-
     return (
-        <div style={{"font-size": `${size()}px`,}} class={styles.controlsContainer}>
+        <div style={{"font-size": `${store.dispSize}px`,}} class={styles.controlsContainer}>
 			<div class={styles.controlsText}>
 				Volume 
 				<input class={styles.controlsSlider}
@@ -145,7 +128,7 @@ const Controls: Component<{}> = (props: {}) => {
 
 			<div class={styles.controlsText}>
 				Muted 
-				<input class={styles.controlsCheckbox}
+				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
 					on:change={() => {
 						setLocalMuted(!localMuted());
@@ -156,7 +139,7 @@ const Controls: Component<{}> = (props: {}) => {
 
 			<div class={styles.controlsText}>
 				Sharps 
-				<input class={styles.controlsCheckbox}
+				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
 					checked={localSharps()}
 					on:change={() => {
@@ -166,7 +149,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-            <button class={styles.controlsButton}
+            <button style={{"font-size": `${store.dispSize/1.5}px`,}} class={styles.controlsButton}
                 on:click={() => {
                     clearAllNotes();
                 }}
@@ -176,7 +159,7 @@ const Controls: Component<{}> = (props: {}) => {
 
 			<div class={styles.controlsText}>
 				Use MIDI 
-				<input class={styles.controlsCheckbox}
+				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
 					checked={store.midiMode}
 					ref={midiCheckbox}

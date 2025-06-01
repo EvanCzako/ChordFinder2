@@ -21,7 +21,7 @@ const ChordInfoContainer: Component = (props: {}) => {
     const possibleChords = () => chordInfo().possibleChords;
 
     return (
-        <div class={styles.chordInfo}>
+        <div style={{"font-size": `${store.dispSize/1.3}px`,}} class={styles.chordInfo}>
 			<Show when={displayNotes().length > 0}>
 				Notes pressed:
 				<div>{displayNotes()}</div>

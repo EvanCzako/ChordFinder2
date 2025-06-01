@@ -3,7 +3,6 @@
 	.App {
 		text-align: left;
 		color: white;
-		/* background-color: black; */
 		position: fixed;
 		width: 100%;
 		height: 100%;
@@ -74,7 +73,6 @@
 		width: 100%;
 		height: 100%;
 		display: inline-block;
-		border-radius: 3px;
 		pointer-events: all;
 		visibility: hidden;
 		z-index: -5;
@@ -121,8 +119,10 @@
 		position: absolute;
 		height: 33%;
 		width: 100%;
-		top: 66%;
-
+		top: 62%;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
 	}
 
 	.controlsContainer {
@@ -136,43 +136,39 @@
 	}
 
 	.controlsText {
-		/* position: relative; */
-		font-size: 100%;
 		color: rgb(255, 202, 103);
 		font-style: bold;
-		padding: 3px;
+		margin-left: 1%;
 	}
 
 	.controlsButton {
 		background-color: rgb(163, 36, 226);
 		color: rgb(226, 226, 226);
-		font-size: large;
-		height: 33px;
-		width: 133px;
+		height: 20%;
+		width: 10%;
 		border-radius: 10px;
+		margin-left: 1%;
 	}
 
 	.controlsCheckbox {
 		accent-color: rgb(229, 145, 81);
-		transform: scale(1.5);
-		padding-left: 5px;
-		bottom: 2px;
-		position: absolute;
+		margin-left: 1%;
+		bottom: 10%;
+		position: relative;
 	}
 
 	.controlsSlider {
 		accent-color: rgb(167, 53, 255);
-		position: absolute;
+		margin-left: 1%;
+		position: relative;
 	}
 
 	.mostLikely {
 		color: rgb(255, 53, 255);
-		font-size: 55px;
 	}
 
 	.possibleChords {
 		color: rgb(179, 69, 234);
-		font-size: 40px;
 	}
 
 }

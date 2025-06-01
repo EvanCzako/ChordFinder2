@@ -1,4 +1,4 @@
-import { Component, createSignal, createContext, useContext } from "solid-js";
+import { Component, createSignal, createContext, useContext, onMount, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import * as audioUtils from "../audioUtils";
 const StoreContext = createContext();
@@ -14,6 +14,7 @@ export type AppStateType = {
     volume: number;
     muted: boolean;
 	midiMode: boolean;
+	dispSize: number;
 };
 
 export function StoreProvider(props: any) {
@@ -26,7 +27,8 @@ export function StoreProvider(props: any) {
         sharps: true,
         volume: 1,
         muted: false,
-		midiMode: false
+		midiMode: false,
+		dispSize: 0
     });
 
     const addNotePressed = (note: string) => {
@@ -109,6 +111,23 @@ export function StoreProvider(props: any) {
 			midiMode
 		})
 	}
+
+	const updateSize = () => {
+		const vw = window.innerWidth / 100;
+		const vh = window.innerHeight / 100;
+		const product = Math.sqrt(vw * vh);
+		setAppState({
+			...appState,
+			dispSize: product*3
+		})
+		console.log(product);
+	};
+
+	onMount(() => {
+		updateSize();
+		window.addEventListener("resize", updateSize);
+		onCleanup(() => window.removeEventListener("resize", updateSize));
+	});
 
     const store = [
         appState,
