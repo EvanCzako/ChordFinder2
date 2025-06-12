@@ -640,8 +640,6 @@ function getChordInfo(
         notesArr = notesSharps;
     }
 
-	const lowNote = sortNotesArr(chordNotes)[0];
-
     chordNotes = sortNotesArr(chordNotes).map((noteWithOctave: string) => {
         if (flats) {
             return getFlatFromSharpNoOctave(
@@ -651,6 +649,8 @@ function getChordInfo(
             return noteWithOctave.slice(0, noteWithOctave.length - 1);
         }
     });
+
+	const lowNote = sortNotesArr(chordNotes)[0];
 
     let possibleChords: string[] = [];
 
@@ -797,6 +797,8 @@ function getChordInfo(
         possibleChords = [];
     } else if (lowNote) {
         for (let i = 0; i < possibleChords.length; i += 1) {
+			console.log(lowNote);
+			console.log(possibleChords);
             if (lowNote.slice(0, -1) === possibleChords[i].slice(0, lowNote.length-1)) {
                 mostLikely = possibleChords[i];
                 possibleChords = possibleChords
