@@ -119,7 +119,7 @@ export function StoreProvider(props: any) {
 		const vw = window.innerWidth / 100;
 		const vh = window.innerHeight / 100;
 		const layoutMode = vw >= vh ? "landscape" : "portrait";
-		const product = Math.sqrt(vw * vh);
+		const product = Math.sqrt(vh**2 * Math.min(3,(vw/vh)));
 		setAppState({
 			...appState,
 			dispSize: product*3,
