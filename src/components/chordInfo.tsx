@@ -19,24 +19,39 @@ const ChordInfoContainer: Component = (props: {}) => {
     });
     const mostLikely = () => chordInfo().mostLikely;
     const possibleChords = () => chordInfo().possibleChords;
+	const possibleChordsDispText = () => {
+		if (possibleChords().length > 0){
+			if (mostLikely()){
+				return "Other possible chords:"
+			}
+			return "Possible chords:"
+		}
+		return "";
+	}
 
     return (
         <div style={{"font-size": `${store.dispSize}px`,}} class={styles.chordInfo}>
-			<Show when={displayNotes().length > 0}>
-				Notes pressed:
-				<div>{displayNotes()}</div>
-			</Show>
-			<Show when={mostLikely()}>
-				<div class={styles.mostLikely} style={{"font-size": `${store.dispSize*1.2}px`,}}>Most Likely: {mostLikely()}</div>
-			</Show>
-			<Show when={possibleChords().length > 0}>
-				<div class={styles.possibleChords} style={{"font-size": `${store.dispSize}px`,}}>
-					Possible chords:
-					<For each={possibleChords()}>
-						{(chord, i) => <div>{chord}</div>}
-					</For>
-				</div>
-			</Show>
+			<div class={styles.notesContainer}>
+				<Show when={displayNotes().length > 0}>
+					Notes pressed:
+					<div>{displayNotes()}</div>
+				</Show>
+			</div>
+
+			<div class={styles.chordContainer}>
+				<Show when={mostLikely()}>
+					<div class={styles.mostLikely} style={{"font-size": `${store.dispSize*1.2}px`,}}>Most Likely: {mostLikely()}</div>
+				</Show>
+				<Show when={possibleChords().length > 0}>
+					<div class={styles.possibleChords} style={{"font-size": `${store.dispSize}px`,}}>
+						{possibleChordsDispText()}
+						<For each={possibleChords()}>
+							{(chord, i) => <div>{chord}</div>}
+						</For>
+					</div>
+				</Show>
+			</div>
+
 
         </div>
     );

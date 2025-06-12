@@ -119,7 +119,7 @@
 		position: absolute;
 		height: 33%;
 		width: 100%;
-		top: 63%;
+		top: 64%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
@@ -195,6 +195,36 @@
 	}
 
 }
+
+@media (orientation: landscape) and (min-aspect-ratio: 2/1) {
+
+
+	.chordInfo {
+		color: orange;
+		font-size: xx-large;
+		position: absolute;
+		height: 33%;
+		width: 100%;
+		top: 64%;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		margin-left: 1%;
+	}
+
+
+	.mostLikely {
+		color: rgb(255, 53, 255);
+		font-weight: bold;
+	}
+
+	.possibleChords {
+		color: rgb(179, 69, 234);
+		font-weight: bold;
+	}
+
+}
+
 
 /***********************************************************
 /***********************************************************
