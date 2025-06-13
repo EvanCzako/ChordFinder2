@@ -126,6 +126,10 @@
 		margin-left: 1%;
 	}
 
+	.notesContainer {
+		font-weight: bold;
+	}
+
 	.controlsContainer {
 		position: absolute;
 		height: 33%;
@@ -212,6 +216,9 @@
 		margin-left: 1%;
 	}
 
+	.notesContainer {
+		font-weight: bold;
+	}
 
 	.mostLikely {
 		color: rgb(255, 53, 255);
@@ -358,6 +365,10 @@
 		flex-direction: column;
 		justify-content: space-evenly;
 		margin-left: 1%;
+	}
+
+	.notesContainer {
+		font-weight: bold;
 	}
 
 	.controlsContainer {

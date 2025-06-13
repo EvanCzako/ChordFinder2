@@ -33,8 +33,7 @@ const ChordInfoContainer: Component = (props: {}) => {
         <div style={{"font-size": `${store.dispSize}px`,}} class={styles.chordInfo}>
 			<div class={styles.notesContainer}>
 				<Show when={displayNotes().length > 0}>
-					Notes pressed:
-					<div>{displayNotes()}</div>
+					<div>Notes pressed: {displayNotes()}</div>
 				</Show>
 			</div>
 
