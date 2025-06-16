@@ -650,7 +650,7 @@ function getChordInfo(
         }
     });
 
-	const lowNote = sortNotesArr(chordNotes)[0];
+	const lowNote = chordNotes[0];
 
     let possibleChords: string[] = [];
 
