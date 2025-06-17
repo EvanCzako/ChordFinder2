@@ -110,7 +110,7 @@ const Controls: Component<{}> = (props: {}) => {
 
     return (
         <div class={styles.controlsContainer}>
-			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize/2.1}px`,}}>
 				Volume 
 				<input class={styles.controlsSlider}
 					type="range"
@@ -126,7 +126,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize/2.1}px`,}}>
 				Muted
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
@@ -137,7 +137,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize/2.1}px`,}}>
 				Sharps 
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
@@ -149,7 +149,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize/2.1}px`,}}>
 				MIDI 
 				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
 					type="checkbox"
@@ -171,7 +171,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize/2.1}px`,}}>
 				Clear
 				<button on:click={() => clearAllNotes()} class={styles.controlsButton} style={{"font-size": `${store.dispSize/2}px`,}}>X</button>
 			</div>
