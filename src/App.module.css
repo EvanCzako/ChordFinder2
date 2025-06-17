@@ -6,6 +6,7 @@
 		position: fixed;
 		width: 100%;
 		height: 100%;
+		position: absolute;
 	}
 
 	.whiteKey {
@@ -179,18 +180,27 @@
 	}
 
 	.headerSection {
+		position: absolute;
 		display: flex;
 		justify-content: space-evenly;
+		height: 100%;
+		width: 100%;
 	}
 
 	.titleContainer {
 		position: absolute;
-		left: 50%;
-		height: 20%;
-		width: 100%;
 		display: flex;
-		flex-direction: column;
 		justify-content: space-evenly;
+		width: 100%;
+		height: 29%;
+	}
+
+	.image {
+		/* width: 100%; */
+		height: 100%;
+		/* object-fit: contain; */
+		right: 0%;
+		position: absolute;
 	}
 
 	.titleName {
@@ -372,7 +382,7 @@
 	}
 
 	.controlsContainer {
-		top: 20%;
+		top: 75%;
 		position: absolute;
 		height: 33%;
 		width: 100%;
@@ -422,19 +432,35 @@
 	}
 
 	.headerSection {
+		position: absolute;
 		display: flex;
 		justify-content: space-evenly;
+		height: 33%;
+		width: 100%;
 	}
 
 	.titleContainer {
 		position: absolute;
-		margin-top: 2%;
-		margin-left: 2%;
-		height: 10%;
+		/* margin-top: 2%;
+		margin-left: 2%; */
+		height: 100%;
 		width: 100%;
+		top: 0%;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-evenly;
+	}
+
+	.image {
+		/* width: 100%; */
+		top: 0%;
+		/* height: 70%; */
+		max-width: 100vw;
+		max-height: 23vh;
+		/* object-fit: contain; */
+		/* max-width: 500px; */
+		left: 0%;
+		position: absolute;
 	}
 
 	.titleName {

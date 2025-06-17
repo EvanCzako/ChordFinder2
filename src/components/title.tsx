@@ -20,8 +20,9 @@ const Title: Component<{}> = (props: {}) => {
 
     return (
 		<div class={styles.titleContainer}>
-			<div style={{"font-size": `${store.dispSize*2}px`,}} class={styles.titleName}>ChordFinder</div>
-			<div style={{"font-size": `${store.dispSize}px`,}} class={styles.authorName}>by Evan Czako</div>
+			{/* <div style={{"font-size": `${store.dispSize*2}px`,}} class={styles.titleName}>ChordFinder</div>
+			<div style={{"font-size": `${store.dispSize}px`,}} class={styles.authorName}>by Evan Czako</div> */}
+			<img class={styles.image} src="src/assets/ChordFinder.png" alt="" />
 		</div>
 	);
 };
