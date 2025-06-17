@@ -2,6 +2,7 @@ import { Component, createSignal, JSXElement, Show, onMount, onCleanup } from "s
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
+import MyImage from "../assets/ChordFinder.png";
 
 const Title: Component<{}> = (props: {}) => {
 
@@ -22,7 +23,7 @@ const Title: Component<{}> = (props: {}) => {
 		<div class={styles.titleContainer}>
 			{/* <div style={{"font-size": `${store.dispSize*2}px`,}} class={styles.titleName}>ChordFinder</div>
 			<div style={{"font-size": `${store.dispSize}px`,}} class={styles.authorName}>by Evan Czako</div> */}
-			<img class={styles.image} src="src/assets/ChordFinder.png" alt="" />
+			<img class={styles.image} src={MyImage} alt="" />
 		</div>
 	);
 };
