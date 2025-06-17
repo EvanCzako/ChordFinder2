@@ -116,8 +116,11 @@ export function StoreProvider(props: any) {
 	}
 
 	const updateSize = () => {
-		const vw = window.innerWidth / 100;
-		const vh = window.innerHeight / 100;
+		const vw = (window.visualViewport?.width ?? window.innerWidth) / 100;
+		const vh = (window.visualViewport?.height ?? window.innerHeight) / 100;
+		document.documentElement.style.setProperty('--vh', `${vh}px`);
+		document.documentElement.style.setProperty('--vw', `${vw}px`);
+		console.log(document.documentElement.style.getPropertyValue('--vw'));
 		const layoutMode = vw >= vh ? "landscape" : "portrait";
 		const product = Math.sqrt(vh**2 * Math.min(3,(vw/vh)));
 		setAppState({
