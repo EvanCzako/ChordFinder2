@@ -171,6 +171,11 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
+			<div class={styles.controlsText} style={{"font-size": `${store.dispSize}px`,}}>
+				Clear
+				<button on:click={() => clearAllNotes()} class={styles.controlsButton} style={{"font-size": `${store.dispSize/2}px`,}}>X</button>
+			</div>
+
         </div>
     );
 };
