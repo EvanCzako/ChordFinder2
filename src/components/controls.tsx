@@ -176,7 +176,7 @@ const Controls: Component<{}> = (props: {}) => {
                     clearAllNotes();
                 }}
             >
-                Clear Notes
+                Clear
             </button>
 
         </div>
