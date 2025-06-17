@@ -149,10 +149,13 @@
 	.controlsButton {
 		background-color: rgb(163, 36, 226);
 		color: rgb(226, 226, 226);
-		width: 10%;
 		border-radius: 10px;
 		margin-left: 1%;
 		font-weight: bold;
+		/* width: auto; */
+		max-width: "100px"; 
+		width: "fit-content"; 
+		padding: "0.25rem 0.75rem"; 
 	}
 
 	.controlsCheckbox {

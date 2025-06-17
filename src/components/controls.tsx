@@ -171,7 +171,7 @@ const Controls: Component<{}> = (props: {}) => {
 				/>
 			</div>
 
-			<button style={{"font-size": `${store.dispSize/1.5}px`}} class={styles.controlsButton}
+			<button style={{"font-size": `${store.dispSize}px`}} class={styles.controlsButton}
                 on:click={() => {
                     clearAllNotes();
                 }}
