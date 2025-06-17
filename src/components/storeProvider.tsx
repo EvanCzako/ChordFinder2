@@ -125,7 +125,7 @@ export function StoreProvider(props: any) {
 		const product = Math.sqrt(vh**2 * Math.min(3,(vw/vh)));
 		setAppState({
 			...appState,
-			dispSize: product*3,
+			dispSize: product*3*0.8,
 			layoutMode
 		});
 	};

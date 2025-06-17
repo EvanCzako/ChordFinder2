@@ -153,7 +153,6 @@
 		border-radius: 10px;
 		margin-left: 1%;
 		font-weight: bold;
-		width: 10%;
 		max-width: "100px"; 
 		width: "fit-content"; 
 		padding: "0.25rem 0.75rem"; 
@@ -162,7 +161,7 @@
 	.controlsCheckbox {
 		accent-color: rgb(229, 145, 81);
 		margin-left: 1%;
-		bottom: 10%;
+		/* bottom: 5%; */
 		position: relative;
 	}
 
