@@ -441,8 +441,6 @@
 
 	.titleContainer {
 		position: absolute;
-		/* margin-top: 2%;
-		margin-left: 2%; */
 		height: 100%;
 		width: 100%;
 		top: 0%;
@@ -452,13 +450,9 @@
 	}
 
 	.image {
-		/* width: 100%; */
 		top: 0%;
-		/* height: 70%; */
 		max-width: calc(var(--vw, 1vw) * 100);
 		max-height: calc(var(--vh, 1vh) * 23);
-		/* object-fit: contain; */
-		/* max-width: 500px; */
 		left: 0%;
 		position: absolute;
 	}
