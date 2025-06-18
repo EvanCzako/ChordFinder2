@@ -73,7 +73,6 @@ export function StoreProvider(props: any) {
     };
 
     const clearAllNotes = () => {
-		console.log("Clear notes");
         setAppState({
             ...appState,
             notesPressed: [],

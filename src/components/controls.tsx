@@ -23,7 +23,6 @@ const Controls: Component<{}> = (props: {}) => {
 	let midiCheckbox: HTMLInputElement | undefined;
 
 	const textSize = createMemo(() => {
-		console.log(store.dispSize);
 		if (store.layoutMode === "portrait"){
 			return store.dispSize;
 		} else {
@@ -77,7 +76,7 @@ const Controls: Component<{}> = (props: {}) => {
 				if (str2 !== "0xf8 ") {
 					const note = audioUtils.freqArr[parseInt(event.data.slice(1))];
 					const noteVol = parseInt(event.data[2]);
-					if (noteVol > 0) {
+					if (noteVol > 0 && event.data[0] !== 128) {
 						addNotePressed(note);
 					} else {
 						removeNotePressed(note);

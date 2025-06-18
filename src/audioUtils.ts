@@ -798,8 +798,9 @@ function getChordInfo(
     } else if (lowNote) {
         for (let i = 0; i < possibleChords.length; i += 1) {
 			console.log(lowNote);
+			console.log(lowNote.length);
 			console.log(possibleChords);
-            if (lowNote.slice(0, -1) === possibleChords[i].slice(0, lowNote.length-1)) {
+            if (lowNote === possibleChords[i].slice(0, lowNote.length)) {
                 mostLikely = possibleChords[i];
                 possibleChords = possibleChords
                     .slice(0, i)
