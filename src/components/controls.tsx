@@ -76,9 +76,9 @@ const Controls: Component<{}> = (props: {}) => {
 				if (str2 !== "0xf8 ") {
 					const note = audioUtils.freqArr[parseInt(event.data.slice(1))];
 					const noteVol = parseInt(event.data[2]);
-					if (noteVol > 0 && event.data[0] !== 128) {
+					if (noteVol > 0 && event.data[0] === 144) {
 						addNotePressed(note);
-					} else {
+					} else if (event.data[0] === 128 || noteVol === 0) {
 						removeNotePressed(note);
 					}
 				}
