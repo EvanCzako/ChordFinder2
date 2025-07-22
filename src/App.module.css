@@ -467,3 +467,7 @@
 		font-weight: 800;
 	}
 }
+
+.controlsButton:hover {
+	background-color: rgb(199, 76, 185);
+}
