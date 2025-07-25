@@ -21,9 +21,9 @@ const Title: Component<{}> = (props: {}) => {
 
     return (
 		<div class={styles.titleContainer}>
-			{/* <div style={{"font-size": `${store.dispSize*2}px`,}} class={styles.titleName}>ChordFinder</div>
-			<div style={{"font-size": `${store.dispSize}px`,}} class={styles.authorName}>by Evan Czako</div> */}
 			<img class={styles.image} src={MyImage} alt="" />
+			<a href="https://evanczako.github.io/DoughLab2/" target="_blank" style={{"font-size": `${store.dispSize*0.6}px`,}} class={styles.doughLabLink}>by Evan Czako (more here)</a>
+			
 		</div>
 	);
 };
