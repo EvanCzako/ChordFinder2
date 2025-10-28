@@ -27,7 +27,7 @@ export function StoreProvider(props: any) {
             possibleChords: [],
         },
         sharps: true,
-        volume: 1,
+        volume: 0.2,
         muted: false,
 		midiMode: false,
 		dispSize: 0,
