@@ -123,7 +123,7 @@ const Controls: Component<{}> = (props: {}) => {
 				<input class={styles.controlsSlider}
 					type="range"
 					ref={volumeSlider}
-					value={100}
+					value={store.volume*100}
 					min={0}
 					max={100}
 					on:input={() => {
