@@ -1,4 +1,4 @@
-import { Component, createSignal, JSXElement, Show, onMount, onCleanup, createMemo } from "solid-js";
+import { Component, createSignal, createMemo } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
@@ -13,30 +13,31 @@ const Controls: Component<{}> = (props: {}) => {
             setSharps,
             addNotePressed,
             removeNotePressed,
-			setMidiMode
+            setMidiMode,
         },
     ] = useStore() as any;
     const [localMuted, setLocalMuted] = createSignal(false);
     const [localSharps, setLocalSharps] = createSignal(true);
 
     let volumeSlider: HTMLInputElement | undefined;
-	let midiCheckbox: HTMLInputElement | undefined;
+    let midiCheckbox: HTMLInputElement | undefined;
 
-	const textSize = createMemo(() => {
-		if (store.layoutMode === "portrait"){
-			return store.dispSize;
-		} else {
-			return (store.dispSize**1.2)/3;	
-		}
-	})
+    const textSize = createMemo(() => {
+        if (store.layoutMode === "portrait") {
+            return store.dispSize;
+        } else {
+            return (store.dispSize ** 1.2) / 3;
+        }
+    });
 
     const doMIDIStuff = () => {
         const navigator = window.navigator;
-        let midi: any = null; // global MIDIAccess object
-		let initialized: boolean = false;
+        let midi: any = null;
+        let initialized: boolean = false;
+
         function onMIDISuccess(midiAccess: any) {
             console.log("MIDI ready!");
-            midi = midiAccess; // store in the global (in real usage, would probably keep in an object instance)
+            midi = midiAccess;
             listInputsAndOutputs(midi);
             startLoggingMIDIInput(midi);
         }
@@ -56,7 +57,6 @@ const Controls: Component<{}> = (props: {}) => {
                         ` version:'${input.version}'`,
                 );
             }
-
             for (const entry of midiAccess.outputs) {
                 const output = entry[1];
                 console.log(
@@ -66,123 +66,119 @@ const Controls: Component<{}> = (props: {}) => {
         }
 
         function onMIDIMessage(event: any) {
-			if(store.midiMode){
-				let str = `MIDI message received at timestamp ${event.timeStamp}[${event.data.length} bytes]: `;
-				let str2 = "";
-				for (const character of event.data) {
-					str2 += `0x${character.toString(16)} `;
-				}
-				str += str2;
-				if (str2 !== "0xf8 ") {
-					const note = audioUtils.freqArr[parseInt(event.data.slice(1))];
-					const noteVol = parseInt(event.data[2]);
-					if (noteVol > 0 && event.data[0] === 144) {
-						addNotePressed(note);
-					} else if (event.data[0] === 128 || noteVol === 0) {
-						removeNotePressed(note);
-					}
-				}
-			}
+            if (store.midiMode) {
+                let str = `MIDI message received at timestamp ${event.timeStamp}[${event.data.length} bytes]: `;
+                let str2 = "";
+                for (const character of event.data) {
+                    str2 += `0x${character.toString(16)} `;
+                }
+                str += str2;
+                if (str2 !== "0xf8 ") {
+                    const note = audioUtils.freqArr[parseInt(event.data.slice(1))];
+                    const noteVol = parseInt(event.data[2]);
+                    if (noteVol > 0 && event.data[0] === 144) {
+                        addNotePressed(note);
+                    } else if (event.data[0] === 128 || noteVol === 0) {
+                        removeNotePressed(note);
+                    }
+                }
+            }
         }
 
         function startLoggingMIDIInput(midiAccess: any) {
-            if(!initialized){
-				midiAccess.inputs.forEach((entry: any) => {
-					entry.onmidimessage = onMIDIMessage;
-				});
-			}
-
-			initialized = true;
+            if (!initialized) {
+                midiAccess.inputs.forEach((entry: any) => {
+                    entry.onmidimessage = onMIDIMessage;
+                });
+            }
+            initialized = true;
         }
-        
-		const runMidiStuff = (): void => {
-			navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-		}
 
-		const cancelMidiStuff = (): void => {
-			// May not be necessary to implement for now
-		}
+        const runMidiStuff = (): void => {
+            navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+        };
 
-		return {
-			runMidiStuff,
-			cancelMidiStuff
-		}
+        const cancelMidiStuff = (): void => {
+            // May not be necessary to implement for now
+        };
 
+        return { runMidiStuff, cancelMidiStuff };
     };
 
-	const {
-		runMidiStuff,
-		cancelMidiStuff
-	} = doMIDIStuff();
-
+    const { runMidiStuff, cancelMidiStuff } = doMIDIStuff();
 
     return (
         <div class={styles.controlsContainer}>
-			<div class={styles.controlsText} style={{"font-size": `${textSize()}px`,}}>
-				Volume 
-				<input class={styles.controlsSlider}
-					type="range"
-					ref={volumeSlider}
-					value={store.volume*100}
-					min={0}
-					max={100}
-					on:input={() => {
-						if (volumeSlider) {
-							adjustVolume(parseFloat(volumeSlider.value) * 0.01);
-						}
-					}}
-				/>
-			</div>
+            <div class={styles.controlsText} style={{ "font-size": `${textSize()}px` }}>
+                <span>Volume</span>
+                <input
+                    class={styles.controlsSlider}
+                    type="range"
+                    ref={volumeSlider}
+                    value={store.volume * 100}
+                    min={0}
+                    max={100}
+                    on:input={() => {
+                        if (volumeSlider) {
+                            adjustVolume(parseFloat(volumeSlider.value) * 0.01);
+                        }
+                    }}
+                />
+            </div>
 
-			<div class={styles.controlsText} style={{"font-size": `${textSize()}px`,}}>
-				Muted
-				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
-					type="checkbox"
-					on:change={() => {
-						setLocalMuted(!localMuted());
-						setMuted(localMuted());
-					}}
-				/>
-			</div>
+            <div class={styles.controlsText} style={{ "font-size": `${textSize()}px` }}>
+                <span>Muted</span>
+                <label class={styles.toggleSwitch}>
+                    <input
+                        type="checkbox"
+                        on:change={() => {
+                            setLocalMuted(!localMuted());
+                            setMuted(localMuted());
+                        }}
+                    />
+                    <span class={styles.toggleKnob}></span>
+                </label>
+            </div>
 
-			<div class={styles.controlsText} style={{"font-size": `${textSize()}px`,}}>
-				Sharps 
-				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
-					type="checkbox"
-					checked={localSharps()}
-					on:change={() => {
-						setLocalSharps(!localSharps());
-						setSharps(localSharps());
-					}}
-				/>
-			</div>
+            <div class={styles.controlsText} style={{ "font-size": `${textSize()}px` }}>
+                <span>Sharps</span>
+                <label class={styles.toggleSwitch}>
+                    <input
+                        type="checkbox"
+                        checked={localSharps()}
+                        on:change={() => {
+                            setLocalSharps(!localSharps());
+                            setSharps(localSharps());
+                        }}
+                    />
+                    <span class={styles.toggleKnob}></span>
+                </label>
+            </div>
 
-			<div class={styles.controlsText} style={{"font-size": `${textSize()}px`,}}>
-				MIDI 
-				<input style={{"transform": `scale(${store.dispSize/20})`,}} class={styles.controlsCheckbox}
-					type="checkbox"
-					checked={store.midiMode}
-					ref={midiCheckbox}
-					on:change={() => {
-						if(midiCheckbox){
-							if(midiCheckbox.checked){
-								setMidiMode(true);
-								clearAllNotes();
-								runMidiStuff();
-							} else {
-								setMidiMode(false);
-								cancelMidiStuff();
-								clearAllNotes();
-							}
-						}
-					}}
-				/>
-			</div>
-
-			<div class={styles.controlsText} style={{"font-size": `${textSize()}px`,}}>
-				Clear
-				<button on:click={() => clearAllNotes()} class={styles.controlsButton} style={{"font-size": `${store.dispSize/2}px`,}}>X</button>
-			</div>
+            <div class={styles.controlsText} style={{ "font-size": `${textSize()}px` }}>
+                <span>MIDI</span>
+                <label class={styles.toggleSwitch}>
+                    <input
+                        type="checkbox"
+                        checked={store.midiMode}
+                        ref={midiCheckbox}
+                        on:change={() => {
+                            if (midiCheckbox) {
+                                if (midiCheckbox.checked) {
+                                    setMidiMode(true);
+                                    clearAllNotes();
+                                    runMidiStuff();
+                                } else {
+                                    setMidiMode(false);
+                                    cancelMidiStuff();
+                                    clearAllNotes();
+                                }
+                            }
+                        }}
+                    />
+                    <span class={styles.toggleKnob}></span>
+                </label>
+            </div>
 
         </div>
     );

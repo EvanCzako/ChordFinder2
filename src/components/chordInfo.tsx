@@ -1,8 +1,8 @@
 import { Component, createSignal, createMemo, Show, For } from "solid-js";
 import { useStore } from "./storeProvider";
-import WhiteKey from "./whiteKey";
 import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
+import MyImage from "../assets/ChordFinder.png";
 
 const ChordInfoContainer: Component = (props: {}) => {
     const [store, { addNotePressed, removeNotePressed }] = useStore() as any;
@@ -19,39 +19,41 @@ const ChordInfoContainer: Component = (props: {}) => {
     });
     const mostLikely = () => chordInfo().mostLikely;
     const possibleChords = () => chordInfo().possibleChords;
-	const possibleChordsDispText = () => {
-		if (possibleChords().length > 0){
-			if (mostLikely()){
-				return "Other possible chords:"
-			}
-			return "Possible chords:"
-		}
-		return "";
-	}
+    const possibleChordsDispText = () => {
+        if (possibleChords().length > 0) {
+            if (mostLikely()) {
+                return "Other possible chords:";
+            }
+            return "Possible chords:";
+        }
+        return "";
+    };
+    const textSize = () => store.dispSize * 0.75;
 
     return (
-        <div style={{"font-size": `${store.dispSize}px`,}} class={styles.chordInfo}>
-			<div class={styles.notesContainer}>
-				<Show when={displayNotes().length > 0}>
-					<div>Notes pressed: {displayNotes()}</div>
-				</Show>
-			</div>
+        <div class={styles.chordInfo}>
+            <img class={styles.chordLogo} src={MyImage} alt="" />
+            <div style={{ "font-size": `${textSize()}px` }} class={styles.chordContent}>
+                <div class={styles.notesContainer}>
+                    <Show when={displayNotes().length > 0}>
+                        <div>Notes pressed: {displayNotes()}</div>
+                    </Show>
+                </div>
 
-			<div class={styles.chordContainer}>
-				<Show when={mostLikely()}>
-					<div class={styles.mostLikely} style={{"font-size": `${store.dispSize*1.2}px`,}}>Most Likely: {mostLikely()}</div>
-				</Show>
-				<Show when={possibleChords().length > 0}>
-					<div class={styles.possibleChords} style={{"font-size": `${store.dispSize}px`,}}>
-						{possibleChordsDispText()}
-						<For each={possibleChords()}>
-							{(chord, i) => <div>{chord}</div>}
-						</For>
-					</div>
-				</Show>
-			</div>
-
-
+                <div class={styles.chordContainer}>
+                    <Show when={mostLikely()}>
+                        <div class={styles.mostLikely} style={{ "font-size": `${textSize() * 1.2}px` }}>Most Likely: {mostLikely()}</div>
+                    </Show>
+                    <Show when={possibleChords().length > 0}>
+                        <div class={styles.possibleChords} style={{ "font-size": `${textSize()}px` }}>
+                            {possibleChordsDispText()}
+                            <For each={possibleChords()}>
+                                {(chord, i) => <div>{chord}</div>}
+                            </For>
+                        </div>
+                    </Show>
+                </div>
+            </div>
         </div>
     );
 };
