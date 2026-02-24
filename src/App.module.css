@@ -101,15 +101,32 @@
 	}
 
 	.octaveContainer {
+		flex: 7;
+		min-width: 0;
+		height: 100%;
+		position: relative;
+	}
+
+	.halfOctaveContainer {
+		flex: 4;
+		min-width: 0;
+		height: 100%;
+		position: relative;
+	}
+
+	.halfBlackKeyContainer {
+		position: absolute;
 		height: 100%;
 		width: 100%;
-		position: relative;
+		left: 9%;
+		z-index: 2;
+		pointer-events: none;
+		display: flex;
 	}
 
 	.pianoContainer {
 		position: absolute;
 		display: flex;
-		justify-content: space-evenly;
 		width: 100%;
 		height: 25%;
 		top: 65%;
@@ -334,9 +351,27 @@
 	}
 
 	.octaveContainer {
+		flex: 7;
+		min-width: 0;
+		height: 100%;
+		position: relative;
+	}
+
+	.halfOctaveContainer {
+		flex: 4;
+		min-width: 0;
+		height: 100%;
+		position: relative;
+	}
+
+	.halfBlackKeyContainer {
+		position: absolute;
 		height: 100%;
 		width: 100%;
-		position: relative;
+		left: 9%;
+		z-index: 2;
+		pointer-events: none;
+		display: flex;
 	}
 
 	.pianoContainer {
@@ -345,7 +380,6 @@
 		height: 25%;
 		width: 100%;
 		display: flex;
-		justify-content: space-evenly;
 		overflow: hidden;
 	}
 
