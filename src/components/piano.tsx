@@ -17,14 +17,12 @@ const PianoComponent: Component = (props: {}) => {
 	});
 
 	const dispOctaves = () => {
-		if( width() > 1300) {
+		if (width() > 1300) {
 			return [2,3,4,5];
-		} else if (width() > 900 && width() <= 1300){
+		} else if (width() > 900) {
 			return [3,4,5];
-		} else if (width() <= 900 && width() > 600) {
-			return [4,5];
 		} else {
-			return [4];
+			return [4,5];
 		}
 	}
 

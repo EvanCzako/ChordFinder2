@@ -10,22 +10,16 @@ import PianoComponent from "./components/piano";
 import ChordInfoContainer from "./components/chordInfo";
 import Controls from "./components/controls";
 import styles from "./App.module.css";
-import Title from "./components/title";
 import * as audioUtils from "./audioUtils";
 
 const App: Component = () => {
 
-	
-
     return (
         <StoreProvider>
             <div class={styles.App}>
-				<div class={styles.headerSection}>
-					<Title/>
-					<Controls />
-				</div>
-                <PianoComponent />
+                <Controls />
                 <ChordInfoContainer />
+                <PianoComponent />
             </div>
         </StoreProvider>
     );
