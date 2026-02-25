@@ -3,24 +3,16 @@ import WhiteKey from "./whiteKey";
 import BlackKey from "./blackKey";
 import styles from "../App.module.css";
 
-const OctaveContainer: Component<{ octaveIdx: number }> = (props: {
-	octaveIdx: number;
-}) => {
+const HalfOctaveContainer: Component<{ octaveIdx: number }> = (props) => {
 	return (
-		<div class={styles.octaveContainer}>
-			<div class={styles.blackKeyContainer}>
-				<BlackKey note={`C#${props.octaveIdx}`} />
-				<BlackKey note={`D#${props.octaveIdx}`} />
-				<div class={styles.fakeKey} id="E#"></div>
+		<div class={styles.halfOctaveContainer}>
+			<div class={styles.halfBlackKeyContainer}>
 				<BlackKey note={`F#${props.octaveIdx}`} />
 				<BlackKey note={`G#${props.octaveIdx}`} />
 				<BlackKey note={`A#${props.octaveIdx}`} />
 				<div class={styles.fakeKey} id="B#"></div>
 			</div>
-			<div class={styles.whiteKeyContainer}>
-				<WhiteKey note={`C${props.octaveIdx}`} />
-				<WhiteKey note={`D${props.octaveIdx}`} />
-				<WhiteKey note={`E${props.octaveIdx}`} />
+			<div class={styles.halfWhiteKeyContainer}>
 				<WhiteKey note={`F${props.octaveIdx}`} />
 				<WhiteKey note={`G${props.octaveIdx}`} />
 				<WhiteKey note={`A${props.octaveIdx}`} />
@@ -30,4 +22,4 @@ const OctaveContainer: Component<{ octaveIdx: number }> = (props: {
 	);
 };
 
-export default OctaveContainer;
+export default HalfOctaveContainer;
