@@ -11,6 +11,8 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
         return store.notesPressed.includes(props.note);
     });
 
+    const isC = props.note.startsWith('C');
+
     return (
         <Show
             when={!pressed()}
@@ -20,7 +22,11 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
                     on:click={() => {
                         removeNotePressed(props.note);
                     }}
-                ></div>
+                >
+                    <Show when={isC}>
+                        <span class={styles.octaveLabel}>{props.note}</span>
+                    </Show>
+                </div>
             }
         >
             <div
@@ -28,7 +34,11 @@ const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
                 on:click={() => {
                     addNotePressed(props.note);
                 }}
-            ></div>
+            >
+                <Show when={isC}>
+                    <span class={styles.octaveLabel}>{props.note}</span>
+                </Show>
+            </div>
         </Show>
     );
 };

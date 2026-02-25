@@ -40,11 +40,14 @@ const ChordInfoContainer: Component = (props: {}) => {
 
                 <div class={styles.chordContainer}>
                     <Show when={mostLikely()}>
-                        <div class={styles.mostLikely} style={{ "font-size": `${textSize() * 1.2}px` }}>Most Likely: {mostLikely()}</div>
+                        <div class={styles.mostLikely} style={{ "font-size": `${textSize() * 1.2}px` }}>
+                            <span class={styles.chordLabel}>Most Likely:</span>
+                            <div>{mostLikely()}</div>
+                        </div>
                     </Show>
                     <Show when={possibleChords().length > 0}>
-                        <div class={styles.possibleChords} style={{ "font-size": `${textSize()}px` }}>
-                            {possibleChordsDispText()}
+                        <div class={styles.possibleChords} style={{ "font-size": `${textSize() * 1.2}px` }}>
+                            <span class={styles.chordLabel}>{possibleChordsDispText()}</span>
                             <For each={possibleChords()}>
                                 {(chord, i) => <div>{chord}</div>}
                             </For>
