@@ -138,7 +138,8 @@
 	.pianoContainer {
 		position: absolute;
 		display: flex;
-		width: 100%;
+		left: 8px;
+		right: 8px;
 		height: 23%;
 		top: 65%;
 		gap: 2px;
@@ -177,9 +178,8 @@
 	}
 
 	.controlsGrid {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
+		display: grid;
+		grid-template-rows: repeat(4, 1fr);
 		flex: 1;
 		min-height: 0;
 	}
@@ -262,7 +262,7 @@
 	.controlsGrid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		align-items: center;
+		grid-template-rows: 1fr 1fr;
 		gap: 4% 0;
 		flex: 1;
 		min-height: 0;
@@ -415,7 +415,8 @@
 		position: absolute;
 		top: 65%;
 		height: 23%;
-		width: 100%;
+		left: 8px;
+		right: 8px;
 		display: flex;
 		overflow: hidden;
 		gap: 2px;
@@ -456,9 +457,8 @@
 	}
 
 	.controlsGrid {
-		display: flex;
-		flex-direction: column;
-		justify-content: space-evenly;
+		display: grid;
+		grid-template-rows: repeat(4, 1fr);
 		flex: 1;
 		min-height: 0;
 	}
@@ -560,8 +560,8 @@
 
 .controlsSlider::-webkit-slider-thumb {
 	-webkit-appearance: none;
-	width: 1em;
-	height: 1em;
+	width: 1.4em;
+	height: 1.4em;
 	border-radius: 50%;
 	background: rgb(167, 53, 255);
 	cursor: pointer;
@@ -569,8 +569,8 @@
 }
 
 .controlsSlider::-moz-range-thumb {
-	width: 1em;
-	height: 1em;
+	width: 1.4em;
+	height: 1.4em;
 	border-radius: 50%;
 	background: rgb(167, 53, 255);
 	cursor: pointer;
@@ -657,12 +657,13 @@
 .clearButton {
 	position: absolute;
 	top: 90%;
-	height: 10%;
-	width: 100%;
+	bottom: 8px;
+	left: 8px;
+	right: 8px;
 	background-color: rgb(100, 20, 165);
 	color: white;
 	border: none;
-	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 12px;
 	font-size: 1rem;
 	font-weight: 700;
 	letter-spacing: 0.14em;
