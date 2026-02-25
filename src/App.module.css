@@ -1,5 +1,4 @@
 @media (orientation: landscape) {
-
 	.App {
 		text-align: left;
 		color: white;
@@ -229,12 +228,9 @@
 	.doughLabLink:hover {
 		color: rgb(193, 115, 171);
 	}
-
 }
 
 @media (orientation: landscape) and (min-aspect-ratio: 2/1) {
-
-
 	.chordInfo {
 		color: rgb(232, 165, 50);
 		position: absolute;
@@ -271,9 +267,7 @@
 		flex: 1;
 		min-height: 0;
 	}
-
 }
-
 
 /***********************************************************
 /***********************************************************
@@ -282,7 +276,6 @@
 /***********************************************************/
 
 @media (orientation: portrait) {
-
 	.App {
 		text-align: left;
 		color: white;
@@ -519,7 +512,6 @@
 	.doughLabLink:hover {
 		color: rgb(193, 115, 171);
 	}
-
 }
 
 /* ── Controls: orientation-independent ─────────────────── */
@@ -596,7 +588,9 @@
 	font-weight: 700;
 	cursor: pointer;
 	flex-shrink: 0;
-	transition: background-color 0.18s, box-shadow 0.18s;
+	transition:
+		background-color 0.18s,
+		box-shadow 0.18s;
 	box-shadow: 0 2px 8px rgba(120, 30, 185, 0.4);
 }
 
@@ -644,7 +638,9 @@
 	transform: translateY(-50%);
 	background-color: rgb(150, 150, 165);
 	border-radius: 50%;
-	transition: transform 0.22s, background-color 0.22s;
+	transition:
+		transform 0.22s,
+		background-color 0.22s;
 }
 
 .toggleSwitch input:checked + .toggleKnob {
