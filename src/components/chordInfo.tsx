@@ -2,7 +2,6 @@ import { Component, createSignal, createMemo, Show, For } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
-import MyImage from "../assets/ChordFinder.png";
 
 const ChordInfoContainer: Component = (props: {}) => {
     const [store, { addNotePressed, removeNotePressed }] = useStore() as any;
@@ -32,7 +31,6 @@ const ChordInfoContainer: Component = (props: {}) => {
 
     return (
         <div class={styles.chordInfo}>
-            <img class={styles.chordLogo} src={MyImage} alt="" />
             <div style={{ "font-size": `${textSize()}px` }} class={styles.chordContent}>
                 <div class={styles.notesContainer}>
                     <Show when={displayNotes().length > 0}>

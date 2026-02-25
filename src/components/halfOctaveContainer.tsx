@@ -10,9 +10,9 @@ const HalfOctaveContainer: Component<{ octaveIdx: number }> = (props) => {
                 <BlackKey note={`F#${props.octaveIdx}`} />
                 <BlackKey note={`G#${props.octaveIdx}`} />
                 <BlackKey note={`A#${props.octaveIdx}`} />
-                <div class={styles.fakeKey}></div>
+                <div class={styles.fakeKey} id="B#"></div>
             </div>
-            <div class={styles.whiteKeyContainer}>
+            <div class={styles.halfWhiteKeyContainer}>
                 <WhiteKey note={`F${props.octaveIdx}`} />
                 <WhiteKey note={`G${props.octaveIdx}`} />
                 <WhiteKey note={`A${props.octaveIdx}`} />

@@ -2,6 +2,7 @@ import { Component, createSignal, createMemo } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
+import MyImage from "../assets/ChordFinder.png";
 
 const Controls: Component<{}> = (props: {}) => {
     const [
@@ -22,13 +23,7 @@ const Controls: Component<{}> = (props: {}) => {
     let volumeSlider: HTMLInputElement | undefined;
     let midiCheckbox: HTMLInputElement | undefined;
 
-    const textSize = createMemo(() => {
-        if (store.layoutMode === "portrait") {
-            return store.dispSize;
-        } else {
-            return (store.dispSize ** 1.2) / 3;
-        }
-    });
+    const textSize = createMemo(() => store.dispSize);
 
     const doMIDIStuff = () => {
         const navigator = window.navigator;
@@ -109,6 +104,8 @@ const Controls: Component<{}> = (props: {}) => {
 
     return (
         <div class={styles.controlsContainer}>
+            <img class={styles.controlsLogo} src={MyImage} alt="" />
+            <div class={styles.controlsGrid}>
             <div class={styles.controlsText} style={{ "font-size": `${textSize()}px` }}>
                 <span>Volume</span>
                 <input
@@ -178,6 +175,7 @@ const Controls: Component<{}> = (props: {}) => {
                     />
                     <span class={styles.toggleKnob}></span>
                 </label>
+            </div>
             </div>
 
         </div>
