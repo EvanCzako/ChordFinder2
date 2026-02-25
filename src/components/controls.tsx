@@ -103,7 +103,14 @@ const Controls: Component = () => {
 
 	return (
 		<div class={styles.controlsContainer}>
-			<img class={styles.controlsLogo} src={MyImage} alt="" />
+			<a
+				href="https://evanczako.github.io/DoughLab2/"
+				target="_blank"
+				rel="noopener noreferrer"
+				class={styles.controlsLogoLink}
+			>
+				<img class={styles.controlsLogo} src={MyImage} alt="DoughLab" />
+			</a>
 			<div class={styles.controlsGrid}>
 				<div
 					class={styles.controlsText}
