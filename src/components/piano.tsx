@@ -1,5 +1,11 @@
-import { Component, onCleanup, onMount, For } from "solid-js";
-import { createSignal } from "solid-js";
+import {
+	Component,
+	onCleanup,
+	onMount,
+	For,
+	createMemo,
+	createSignal,
+} from "solid-js";
 import OctaveContainer from "./octaveContainer";
 import HalfOctaveContainer from "./halfOctaveContainer";
 import styles from "../App.module.css";
@@ -18,7 +24,7 @@ const PianoComponent: Component = () => {
 		onCleanup(() => window.removeEventListener("resize", updateWidth));
 	});
 
-	const dispSegments = (): PianoSegment[] => {
+	const dispSegments = createMemo((): PianoSegment[] => {
 		if (width() > 1300) {
 			return [
 				{ octave: 2, half: false },
@@ -58,7 +64,7 @@ const PianoComponent: Component = () => {
 		} else {
 			return [{ octave: 5, half: false }];
 		}
-	};
+	});
 
 	return (
 		<div class={styles.pianoContainer}>

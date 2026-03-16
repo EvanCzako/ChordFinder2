@@ -269,12 +269,6 @@
 	}
 }
 
-/***********************************************************
-/***********************************************************
-/***********************************************************
-/***********************************************************
-/***********************************************************/
-
 @media (orientation: portrait) {
 	.App {
 		text-align: left;
@@ -514,7 +508,6 @@
 	}
 }
 
-/* ── Controls: orientation-independent ─────────────────── */
 
 .controlsLogoLink {
 	align-self: center;
@@ -555,7 +548,6 @@
 	font-size: 0.82em;
 }
 
-/* Volume slider */
 .controlsSlider {
 	-webkit-appearance: none;
 	appearance: none;
@@ -589,7 +581,6 @@
 	box-shadow: 0 0 6px rgba(167, 53, 255, 0.55);
 }
 
-/* Clear button */
 .controlsButton {
 	background-color: rgb(120, 30, 185);
 	color: white;
@@ -610,7 +601,6 @@
 	box-shadow: 0 4px 12px rgba(199, 76, 185, 0.5);
 }
 
-/* Toggle switch */
 .toggleSwitch {
 	position: relative;
 	display: inline-block;
@@ -664,7 +654,6 @@
 	background-color: white;
 }
 
-/* Clear bar */
 .clearButton {
 	position: absolute;
 	top: 90%;

@@ -1,15 +1,9 @@
 import { createContext, useContext, onMount, onCleanup } from "solid-js";
 import { createStore } from "solid-js/store";
 import * as audioUtils from "../audioUtils";
-const StoreContext = createContext();
 
 export type AppStateType = {
 	notesPressed: string[];
-	notesPressedFlats: string[];
-	chordInfo: {
-		mostLikely?: string;
-		possibleChords: string[];
-	};
 	sharps: boolean;
 	volume: number;
 	muted: boolean;
@@ -18,13 +12,23 @@ export type AppStateType = {
 	layoutMode: string;
 };
 
+export type StoreActions = {
+	addNotePressed: (note: string) => void;
+	removeNotePressed: (note: string) => void;
+	clearAllNotes: () => void;
+	adjustVolume: (volume: number) => void;
+	setMuted: (muted: boolean) => void;
+	setSharps: (sharps: boolean) => void;
+	setMidiMode: (midiMode: boolean) => void;
+};
+
+type StoreContextType = [AppStateType, StoreActions];
+
+const StoreContext = createContext<StoreContextType>();
+
 export function StoreProvider(props: any) {
 	const [appState, setAppState] = createStore<AppStateType>({
 		notesPressed: [],
-		notesPressedFlats: [],
-		chordInfo: {
-			possibleChords: [],
-		},
 		sharps: true,
 		volume: 0.2,
 		muted: false,
@@ -34,107 +38,81 @@ export function StoreProvider(props: any) {
 	});
 
 	const addNotePressed = (note: string) => {
-		setAppState({
-			...appState,
-			notesPressed: [...appState.notesPressed, note],
-			notesPressedFlats: [
-				...appState.notesPressedFlats,
-				audioUtils.getFlatFromSharp(note),
-			],
-		});
+		const newNotesPressed = [...appState.notesPressed, note];
+		setAppState({ notesPressed: newNotesPressed });
 		audioUtils.refreshAudio(
-			appState.notesPressed,
+			newNotesPressed,
 			appState.volume,
 			appState.muted,
 		);
 	};
 
 	const removeNotePressed = (note: string) => {
+		let newNotesPressed = appState.notesPressed;
 		if (appState.notesPressed.includes(note)) {
 			const noteIdx = appState.notesPressed.indexOf(note);
-			setAppState({
-				...appState,
-				notesPressed: [
-					...appState.notesPressed.slice(0, noteIdx),
-					...appState.notesPressed.slice(noteIdx + 1),
-				],
-				notesPressedFlats: [
-					...appState.notesPressedFlats.slice(0, noteIdx),
-					...appState.notesPressedFlats.slice(noteIdx + 1),
-				],
-			});
+			newNotesPressed = [
+				...appState.notesPressed.slice(0, noteIdx),
+				...appState.notesPressed.slice(noteIdx + 1),
+			];
+			setAppState({ notesPressed: newNotesPressed });
 		}
 		audioUtils.refreshAudio(
-			appState.notesPressed,
+			newNotesPressed,
 			appState.volume,
 			appState.muted,
 		);
 	};
 
 	const clearAllNotes = () => {
-		setAppState({
-			...appState,
-			notesPressed: [],
-			notesPressedFlats: [],
-		});
-		audioUtils.refreshAudio(
-			appState.notesPressed,
-			appState.volume,
-			appState.muted,
-		);
+		setAppState({ notesPressed: [] });
+		audioUtils.refreshAudio([], appState.volume, appState.muted);
 	};
 
 	const adjustVolume = (volume: number) => {
-		setAppState({
-			...appState,
-			volume,
-		});
-		audioUtils.refreshVolume(appState.volume, appState.muted);
+		setAppState("volume", volume);
+		audioUtils.refreshVolume(volume, appState.muted);
 	};
 
 	const setMuted = (muted: boolean) => {
-		setAppState({
-			...appState,
-			muted,
-		});
-		audioUtils.refreshVolume(appState.volume, appState.muted);
+		setAppState("muted", muted);
+		audioUtils.refreshVolume(appState.volume, muted);
 	};
 
 	const setSharps = (sharps: boolean) => {
-		setAppState({
-			...appState,
-			sharps,
-		});
+		setAppState("sharps", sharps);
 	};
 
 	const setMidiMode = (midiMode: boolean) => {
-		setAppState({
-			...appState,
-			midiMode,
-		});
+		setAppState("midiMode", midiMode);
 	};
 
-	const updateSize = () => {
+	const applySize = () => {
 		const vw = (window.visualViewport?.width ?? window.innerWidth) / 100;
 		const vh = (window.visualViewport?.height ?? window.innerHeight) / 100;
 		document.documentElement.style.setProperty("--vh", `${vh}px`);
 		document.documentElement.style.setProperty("--vw", `${vw}px`);
 		const layoutMode = vw >= vh ? "landscape" : "portrait";
 		const product = Math.sqrt(vh ** 2 * Math.min(3, vw / vh));
-		setAppState({
-			...appState,
-			dispSize: product * 3,
-			layoutMode,
-		});
+		setAppState({ dispSize: product * 3, layoutMode });
+	};
+
+	let resizeTimer: ReturnType<typeof setTimeout> | undefined;
+	const updateSize = () => {
+		clearTimeout(resizeTimer);
+		resizeTimer = setTimeout(applySize, 50);
 	};
 
 	onMount(() => {
-		updateSize();
+		applySize();
 		window.addEventListener("resize", updateSize);
-		onCleanup(() => window.removeEventListener("resize", updateSize));
+		onCleanup(() => {
+			window.removeEventListener("resize", updateSize);
+			clearTimeout(resizeTimer);
+		});
 	});
 
-	const store = [
+	const store: StoreContextType = [
 		appState,
 		{
 			addNotePressed,
@@ -154,6 +132,6 @@ export function StoreProvider(props: any) {
 	);
 }
 
-export function useStore() {
-	return useContext(StoreContext);
+export function useStore(): StoreContextType {
+	return useContext(StoreContext)!;
 }

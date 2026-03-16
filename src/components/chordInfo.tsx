@@ -4,12 +4,16 @@ import * as audioUtils from "../audioUtils";
 import styles from "../App.module.css";
 
 const ChordInfoContainer: Component = () => {
-	const [store] = useStore() as any;
+	const [store] = useStore();
 	const chordInfo = createMemo(() =>
 		audioUtils.getChordInfo(store.notesPressed, !store.sharps),
 	);
 	const displayNotes = createMemo(() => {
-		const notes = store.sharps ? store.notesPressed : store.notesPressedFlats;
+		const notes = store.sharps
+			? store.notesPressed
+			: store.notesPressed.map((n: string) =>
+					audioUtils.getFlatFromSharp(n),
+				);
 		const dispNotes = notes
 			.map((note: string) => note + ",")
 			.join(" ")

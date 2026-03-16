@@ -6,7 +6,7 @@ import Controls from "./components/controls";
 import styles from "./App.module.css";
 
 const ClearBar: Component = () => {
-	const [, { clearAllNotes }] = useStore() as any;
+	const [, { clearAllNotes }] = useStore();
 	return (
 		<button class={styles.clearButton} on:click={() => clearAllNotes()}>
 			Clear

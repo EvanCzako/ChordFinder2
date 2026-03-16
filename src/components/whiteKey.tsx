@@ -1,12 +1,9 @@
 import { Component, createMemo, Show } from "solid-js";
-import { useStore, AppStateType } from "./storeProvider";
+import { useStore } from "./storeProvider";
 import styles from "../App.module.css";
 
 const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
-	const [store, { addNotePressed, removeNotePressed }] = useStore() as [
-		AppStateType,
-		any,
-	];
+	const [store, { addNotePressed, removeNotePressed }] = useStore();
 	const pressed = createMemo(() => {
 		return store.notesPressed.includes(props.note);
 	});

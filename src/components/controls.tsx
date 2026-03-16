@@ -16,7 +16,7 @@ const Controls: Component = () => {
 			removeNotePressed,
 			setMidiMode,
 		},
-	] = useStore() as any;
+	] = useStore();
 	const [localMuted, setLocalMuted] = createSignal(false);
 	const [localSharps, setLocalSharps] = createSignal(true);
 
@@ -62,17 +62,24 @@ const Controls: Component = () => {
 
 		function onMIDIMessage(event: any) {
 			if (store.midiMode) {
+				if (!event.data || event.data.length < 3) return;
 				let str2 = "";
 				for (const character of event.data) {
 					str2 += `0x${character.toString(16)} `;
 				}
 				if (str2 !== "0xf8 ") {
-					const note =
-						audioUtils.freqArr[parseInt(event.data.slice(1))];
-					const noteVol = parseInt(event.data[2]);
-					if (noteVol > 0 && event.data[0] === 144) {
+					const note = audioUtils.freqArr[event.data[1]];
+					const noteVol = event.data[2];
+					if (
+						note !== undefined &&
+						noteVol > 0 &&
+						event.data[0] === 144
+					) {
 						addNotePressed(note);
-					} else if (event.data[0] === 128 || noteVol === 0) {
+					} else if (
+						note !== undefined &&
+						(event.data[0] === 128 || noteVol === 0)
+					) {
 						removeNotePressed(note);
 					}
 				}
@@ -93,7 +100,12 @@ const Controls: Component = () => {
 		};
 
 		const cancelMidiStuff = (): void => {
-			// May not be necessary to implement for now
+			if (midi) {
+				midi.inputs.forEach((entry: any) => {
+					entry.onmidimessage = null;
+				});
+			}
+			initialized = false;
 		};
 
 		return { runMidiStuff, cancelMidiStuff };
