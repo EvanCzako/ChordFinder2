@@ -1,0 +1,153 @@
+.whiteKey {
+	background-color: white;
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	border-radius: 3%;
+	pointer-events: all;
+	position: relative;
+}
+
+.whiteKey:hover {
+	cursor: pointer;
+	background-color: rgb(161, 161, 161);
+}
+
+.whiteKeyPressed {
+	background-color: var(--color-pressed);
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	border-radius: 3%;
+	pointer-events: all;
+	position: relative;
+}
+
+.whiteKeyPressed:hover {
+	cursor: pointer;
+	background-color: var(--color-pressed-hover);
+}
+
+.blackKey {
+	background-color: rgb(40, 40, 40);
+	width: 100%;
+	height: 50%;
+	display: inline-block;
+	border-radius: 3%;
+	pointer-events: all;
+	margin: 0 1%;
+}
+
+.blackKey:hover {
+	cursor: pointer;
+	background-color: rgb(72, 72, 72);
+}
+
+.blackKeyPressed {
+	background-color: var(--color-pressed);
+	width: 100%;
+	height: 50%;
+	display: inline-block;
+	border-radius: 3%;
+	pointer-events: all;
+	margin: 0 1%;
+}
+
+.blackKeyPressed:hover {
+	cursor: pointer;
+	background-color: var(--color-pressed-hover);
+}
+
+.fakeKey {
+	background-color: rgb(40, 40, 40);
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+	pointer-events: all;
+	visibility: hidden;
+	z-index: -5;
+}
+
+.blackKeyContainer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 5%;
+	z-index: 2;
+	pointer-events: none;
+	display: flex;
+	align-items: flex-start;
+}
+
+.whiteKeyContainer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	pointer-events: none;
+	display: flex;
+	gap: 2px;
+}
+
+.halfWhiteKeyContainer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+	pointer-events: none;
+	display: flex;
+	gap: 2px;
+}
+
+.octaveContainer {
+	flex: 7;
+	min-width: 0;
+	height: 100%;
+	position: relative;
+}
+
+.halfOctaveContainer {
+	flex: 4;
+	min-width: 0;
+	height: 100%;
+	position: relative;
+}
+
+.halfBlackKeyContainer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	left: 9%;
+	z-index: 2;
+	pointer-events: none;
+	display: flex;
+	align-items: flex-start;
+}
+
+.pianoContainer {
+	position: absolute;
+	display: flex;
+	left: 8px;
+	right: 8px;
+	height: 23%;
+	top: 65%;
+	gap: 2px;
+}
+
+@media (orientation: portrait) {
+	.pianoContainer {
+		overflow: hidden;
+	}
+}
+
+.octaveLabel {
+	position: absolute;
+	bottom: 6%;
+	left: 50%;
+	transform: translateX(-50%);
+	font-size: 0.75em;
+	color: rgb(90, 90, 90);
+	pointer-events: none;
+	user-select: none;
+	white-space: nowrap;
+}

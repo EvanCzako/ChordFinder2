@@ -1,7 +1,7 @@
 import { Component, createMemo, Show, For } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
-import styles from "../App.module.css";
+import styles from "../styles/chordInfo.module.css";
 
 const ChordInfoContainer: Component = () => {
 	const [store] = useStore();

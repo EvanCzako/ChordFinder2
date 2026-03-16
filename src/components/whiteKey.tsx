@@ -1,6 +1,6 @@
 import { Component, createMemo, Show } from "solid-js";
 import { useStore } from "./storeProvider";
-import styles from "../App.module.css";
+import styles from "../styles/piano.module.css";
 
 const WhiteKey: Component<{ note: string }> = (props: { note: string }) => {
 	const [store, { addNotePressed, removeNotePressed }] = useStore();

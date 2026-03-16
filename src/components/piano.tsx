@@ -8,7 +8,7 @@ import {
 } from "solid-js";
 import OctaveContainer from "./octaveContainer";
 import HalfOctaveContainer from "./halfOctaveContainer";
-import styles from "../App.module.css";
+import styles from "../styles/piano.module.css";
 
 type PianoSegment = { octave: number; half: boolean };
 
@@ -27,42 +27,42 @@ const PianoComponent: Component = () => {
 	const dispSegments = createMemo((): PianoSegment[] => {
 		if (width() > 1300) {
 			return [
+				{ octave: 1, half: false },
 				{ octave: 2, half: false },
 				{ octave: 3, half: false },
 				{ octave: 4, half: false },
-				{ octave: 5, half: false },
 			];
 		} else if (width() > 1100) {
+			return [
+				{ octave: 1, half: true },
+				{ octave: 2, half: false },
+				{ octave: 3, half: false },
+				{ octave: 4, half: false },
+			];
+		} else if (width() > 900) {
+			return [
+				{ octave: 2, half: false },
+				{ octave: 3, half: false },
+				{ octave: 4, half: false },
+			];
+		} else if (width() > 700) {
 			return [
 				{ octave: 2, half: true },
 				{ octave: 3, half: false },
 				{ octave: 4, half: false },
-				{ octave: 5, half: false },
-			];
-		} else if (width() > 900) {
-			return [
-				{ octave: 3, half: false },
-				{ octave: 4, half: false },
-				{ octave: 5, half: false },
-			];
-		} else if (width() > 700) {
-			return [
-				{ octave: 3, half: true },
-				{ octave: 4, half: false },
-				{ octave: 5, half: false },
 			];
 		} else if (width() > 550) {
 			return [
+				{ octave: 3, half: false },
 				{ octave: 4, half: false },
-				{ octave: 5, half: false },
 			];
 		} else if (width() > 360) {
 			return [
-				{ octave: 4, half: true },
-				{ octave: 5, half: false },
+				{ octave: 3, half: true },
+				{ octave: 4, half: false },
 			];
 		} else {
-			return [{ octave: 5, half: false }];
+			return [{ octave: 4, half: false }];
 		}
 	});
 

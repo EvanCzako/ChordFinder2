@@ -3,7 +3,7 @@ import { StoreProvider, useStore } from "./components/storeProvider";
 import PianoComponent from "./components/piano";
 import ChordInfoContainer from "./components/chordInfo";
 import Controls from "./components/controls";
-import styles from "./App.module.css";
+import styles from "./styles/layout.module.css";
 
 const ClearBar: Component = () => {
 	const [, { clearAllNotes }] = useStore();

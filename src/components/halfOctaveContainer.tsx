@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
 import WhiteKey from "./whiteKey";
 import BlackKey from "./blackKey";
-import styles from "../App.module.css";
+import styles from "../styles/piano.module.css";
 
 const HalfOctaveContainer: Component<{ octaveIdx: number }> = (props) => {
 	return (
