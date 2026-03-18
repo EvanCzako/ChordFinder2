@@ -2,7 +2,7 @@ import { Component } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../styles/controls.module.css";
-import MyImage from "../assets/ChordFinder.png";
+import MyImage from "../assets/ChordFinder-downSaturated.png";
 
 const Controls: Component = () => {
 	const [
