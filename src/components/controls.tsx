@@ -83,7 +83,6 @@ const Controls: Component = () => {
 				<img class={styles.controlsLogo} src={MyImage} alt="ChordFinder" />
 				<a
 					href="https://evanczako.github.io/DoughLab2/"
-					target="_blank"
 					rel="noopener noreferrer"
 					class={styles.backLink}
 				>
