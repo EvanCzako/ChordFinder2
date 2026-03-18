@@ -28,24 +28,51 @@
 	}
 }
 
-.controlsLogoLink {
-	align-self: center;
-	flex-shrink: 0;
-	display: flex;
+.logoRow {
 	height: 25%;
-	max-width: 72%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	flex-shrink: 0;
+	padding: 0 4%;
 }
 
 .controlsLogo {
 	height: 100%;
 	width: auto;
-	max-width: 100%;
+	max-width: 50%;
 	object-fit: contain;
-	transition: filter var(--transition-fast);
+	flex-shrink: 0;
 }
 
-.controlsLogoLink:hover .controlsLogo {
-	filter: brightness(1.25) drop-shadow(0 0 8px rgba(200, 130, 255, 0.6));
+@media (orientation: portrait) {
+	.logoRow {
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 6%;
+		padding: 0;
+	}
+
+	.controlsLogo {
+		height: 40%;
+	}
+}
+
+.backLink {
+	font-size: clamp(0.65rem, 1.6vw, 0.9rem);
+	font-weight: 500;
+	color: var(--color-text-gold);
+	text-decoration: none;
+	white-space: nowrap;
+	letter-spacing: 0.02em;
+	transition: color var(--transition-fast);
+}
+
+.backLink:hover {
+	color: var(--color-possible-chords);
+	text-decoration: underline;
 }
 
 .controlsText {

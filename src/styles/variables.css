@@ -1,11 +1,13 @@
 :root {
-	--color-pressed: rgb(210, 75, 210);
-	--color-pressed-hover: rgb(212, 116, 225);
-	--color-accent: rgb(167, 53, 255);
-	--color-accent-border: rgba(167, 53, 255, 0.35);
-	--color-accent-bg: rgba(80, 20, 130, 0.2);
+	--color-bg: #1a1b26;
+	--color-text-primary: #c0caf5;
+	--color-pressed: #ff9e64;
+	--color-pressed-hover: #ffb794;
+	--color-accent: #9273cb;
+	--color-accent-border: rgba(146, 115, 203, 0.35);
+	--color-accent-bg: rgba(36, 40, 59, 0.85);
 	--color-text-gold: rgb(232, 190, 116);
-	--color-most-likely: rgb(222, 86, 222);
-	--color-possible-chords: rgb(167, 92, 209);
+	--color-most-likely: #ff9e64;
+	--color-possible-chords: #bb9af7;
 	--transition-fast: 0.18s;
 }

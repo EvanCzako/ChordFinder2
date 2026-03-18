@@ -26,8 +26,8 @@
 	bottom: 8px;
 	left: 8px;
 	right: 8px;
-	background-color: rgb(100, 20, 165);
-	color: white;
+	background-color: var(--color-accent);
+	color: var(--color-text-primary);
 	border: none;
 	border-radius: 12px;
 	font-size: 1rem;
@@ -42,5 +42,5 @@
 }
 
 .clearButton:hover {
-	background-color: rgb(175, 45, 200);
+	background-color: var(--color-possible-chords);
 }

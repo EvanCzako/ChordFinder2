@@ -79,14 +79,17 @@ const Controls: Component = () => {
 
 	return (
 		<div class={styles.controlsContainer}>
-			<a
-				href="https://evanczako.github.io/DoughLab2/"
-				target="_blank"
-				rel="noopener noreferrer"
-				class={styles.controlsLogoLink}
-			>
-				<img class={styles.controlsLogo} src={MyImage} alt="DoughLab" />
-			</a>
+			<div class={styles.logoRow}>
+				<img class={styles.controlsLogo} src={MyImage} alt="ChordFinder" />
+				<a
+					href="https://evanczako.github.io/DoughLab2/"
+					target="_blank"
+					rel="noopener noreferrer"
+					class={styles.backLink}
+				>
+					Back to Dough's Lab
+				</a>
+			</div>
 			<div class={styles.controlsGrid}>
 				<div
 					class={styles.controlsText}
