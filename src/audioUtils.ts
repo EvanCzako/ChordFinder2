@@ -1,9 +1,9 @@
+type NoteNodes = { gainNode: GainNode; osc: OscillatorNode };
+
 type AudioGlobals = {
 	audioCtx: AudioContext;
-	gainNodes: GainNode[];
-	oscs: OscillatorNode[];
+	noteNodes: Map<string, NoteNodes>;
 	lpFilter?: BiquadFilterNode;
-	volume: number;
 };
 
 type FreqKeyMap = {
@@ -12,10 +12,8 @@ type FreqKeyMap = {
 
 const audioObjs: AudioGlobals = {
 	audioCtx: new AudioContext(),
-	gainNodes: [],
-	oscs: [],
+	noteNodes: new Map(),
 	lpFilter: undefined,
-	volume: 100,
 };
 
 audioObjs.lpFilter = audioObjs.audioCtx.createBiquadFilter();
@@ -52,9 +50,8 @@ const keyArrFlats = [
 	"Bb",
 	"B",
 ];
-const keyArr = keyArrSharps;
 const keyArrIndexMap: Record<string, number> = {};
-keyArr.forEach((note, idx) => {
+keyArrSharps.forEach((note, idx) => {
 	keyArrIndexMap[note] = idx;
 });
 
@@ -570,51 +567,53 @@ const notesFlats = [
 	"Ab",
 ];
 
-const clearAudioNodes: () => void = () => {
-	audioObjs.gainNodes.forEach((gainNode: GainNode) => {
+const clearAudioNodes = (): void => {
+	for (const { gainNode, osc } of audioObjs.noteNodes.values()) {
 		gainNode.disconnect();
-	});
-	audioObjs.gainNodes = [];
-	audioObjs.oscs.forEach((oscNode: OscillatorNode) => {
-		oscNode.stop();
-		oscNode.disconnect();
-	});
-	audioObjs.oscs = [];
+		osc.stop();
+		osc.disconnect();
+	}
+	audioObjs.noteNodes.clear();
 };
 
-const refreshAudio = (
-	keysPressed: string[],
+function rebalanceGains(volume: number, muted: boolean) {
+	const muteFactor = muted ? 0 : 1;
+	const count = audioObjs.noteNodes.size;
+	for (const { gainNode } of audioObjs.noteNodes.values()) {
+		gainNode.gain.value = (muteFactor * volume * 0.7) / (count + 1);
+	}
+}
+
+const addNoteAudio = (note: string, volume: number, muted: boolean): void => {
+	if (audioObjs.noteNodes.has(note)) return;
+	const gainNode = audioObjs.audioCtx.createGain();
+	gainNode.gain.value = 0;
+	gainNode.connect(audioObjs.lpFilter as BiquadFilterNode);
+	const osc = audioObjs.audioCtx.createOscillator();
+	osc.type = "sawtooth";
+	osc.frequency.value = freqMap[note];
+	osc.connect(gainNode);
+	osc.start();
+	audioObjs.noteNodes.set(note, { gainNode, osc });
+	rebalanceGains(volume, muted);
+};
+
+const removeNoteAudio = (
+	note: string,
 	volume: number,
 	muted: boolean,
-) => {
-	clearAudioNodes();
-
-	for (let i = 0; i < keysPressed.length; i += 1) {
-		const gainNode = audioObjs.audioCtx.createGain();
-		audioObjs.gainNodes.push(gainNode);
-		gainNode.gain.value = 0;
-		gainNode.connect(audioObjs.lpFilter as BiquadFilterNode);
-		const osc = audioObjs.audioCtx.createOscillator();
-		osc.type = "sawtooth";
-		osc.frequency.value = freqMap[keysPressed[i]];
-		osc.connect(gainNode);
-		osc.start();
-		audioObjs.oscs.push(osc);
-	}
-
-	const muteFactor = muted ? 0 : 1;
-	for (let i = 0; i < keysPressed.length; i += 1) {
-		audioObjs.gainNodes[i].gain.value =
-			(muteFactor * volume * 0.7) / (keysPressed.length + 1);
-	}
+): void => {
+	const nodes = audioObjs.noteNodes.get(note);
+	if (!nodes) return;
+	nodes.gainNode.disconnect();
+	nodes.osc.stop();
+	nodes.osc.disconnect();
+	audioObjs.noteNodes.delete(note);
+	rebalanceGains(volume, muted);
 };
 
 function refreshVolume(newVolume: number, muted: boolean) {
-	const muteFactor = muted ? 0 : 1;
-	for (let i = 0; i < audioObjs.gainNodes.length; i += 1) {
-		audioObjs.gainNodes[i].gain.value =
-			(muteFactor * newVolume * 0.7) / (audioObjs.gainNodes.length + 1);
-	}
+	rebalanceGains(newVolume, muted);
 }
 
 function getChordInfo(
@@ -768,7 +767,9 @@ function mergeSortedArrays(arr1: any, arr2: any, compFunc: any) {
 }
 
 export {
-	refreshAudio,
+	addNoteAudio,
+	removeNoteAudio,
+	clearAudioNodes,
 	refreshVolume,
 	getChordInfo,
 	getFlatFromSharp,

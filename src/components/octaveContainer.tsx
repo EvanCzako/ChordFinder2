@@ -3,9 +3,7 @@ import WhiteKey from "./whiteKey";
 import BlackKey from "./blackKey";
 import styles from "../styles/piano.module.css";
 
-const OctaveContainer: Component<{ octaveIdx: number }> = (props: {
-	octaveIdx: number;
-}) => {
+const OctaveContainer: Component<{ octaveIdx: number }> = (props) => {
 	return (
 		<div class={styles.octaveContainer}>
 			<div class={styles.blackKeyContainer}>

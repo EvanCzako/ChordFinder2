@@ -1,4 +1,4 @@
-import { Component, createSignal, createMemo } from "solid-js";
+import { Component } from "solid-js";
 import { useStore } from "./storeProvider";
 import * as audioUtils from "../audioUtils";
 import styles from "../styles/controls.module.css";
@@ -17,95 +17,59 @@ const Controls: Component = () => {
 			setMidiMode,
 		},
 	] = useStore();
-	const [localMuted, setLocalMuted] = createSignal(false);
-	const [localSharps, setLocalSharps] = createSignal(true);
-
 	let volumeSlider: HTMLInputElement | undefined;
 	let midiCheckbox: HTMLInputElement | undefined;
 
-	const textSize = createMemo(() => store.dispSize);
-
 	const doMIDIStuff = () => {
-		const navigator = window.navigator;
 		let midi: any = null;
-		let initialized: boolean = false;
 
 		function onMIDISuccess(midiAccess: any) {
 			console.log("MIDI ready!");
 			midi = midiAccess;
-			listInputsAndOutputs(midi);
-			startLoggingMIDIInput(midi);
+			attachHandlers();
+			midi.onstatechange = attachHandlers;
 		}
 
 		function onMIDIFailure(msg: any) {
 			console.error(`Failed to get MIDI access - ${msg}`);
 		}
 
-		function listInputsAndOutputs(midiAccess: any) {
-			for (const entry of midiAccess.inputs) {
-				const input = entry[1];
-				console.log(
-					`Input port [type:'${input.type}']` +
-						` id:'${input.id}'` +
-						` manufacturer:'${input.manufacturer}'` +
-						` name:'${input.name}'` +
-						` version:'${input.version}'`,
-				);
-			}
-			for (const entry of midiAccess.outputs) {
-				const output = entry[1];
-				console.log(
-					`Output port [type:'${output.type}'] id:'${output.id}' manufacturer:'${output.manufacturer}' name:'${output.name}' version:'${output.version}'`,
-				);
-			}
-		}
-
 		function onMIDIMessage(event: any) {
-			if (store.midiMode) {
-				if (!event.data || event.data.length < 3) return;
-				let str2 = "";
-				for (const character of event.data) {
-					str2 += `0x${character.toString(16)} `;
-				}
-				if (str2 !== "0xf8 ") {
-					const note = audioUtils.freqArr[event.data[1]];
-					const noteVol = event.data[2];
-					if (
-						note !== undefined &&
-						noteVol > 0 &&
-						event.data[0] === 144
-					) {
-						addNotePressed(note);
-					} else if (
-						note !== undefined &&
-						(event.data[0] === 128 || noteVol === 0)
-					) {
-						removeNotePressed(note);
-					}
-				}
+			if (!event.data || event.data.length < 3) return;
+			if (event.data[0] === 0xf8) return; // MIDI timing clock
+			const note = audioUtils.freqArr[event.data[1]];
+			const noteVol = event.data[2];
+			if (note !== undefined && noteVol > 0 && event.data[0] === 144) {
+				addNotePressed(note);
+			} else if (
+				note !== undefined &&
+				(event.data[0] === 128 || noteVol === 0)
+			) {
+				removeNotePressed(note);
 			}
 		}
 
-		function startLoggingMIDIInput(midiAccess: any) {
-			if (!initialized) {
-				midiAccess.inputs.forEach((entry: any) => {
+		function attachHandlers() {
+			if (midi) {
+				midi.inputs.forEach((entry: any) => {
 					entry.onmidimessage = onMIDIMessage;
 				});
 			}
-			initialized = true;
 		}
 
 		const runMidiStuff = (): void => {
-			navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+			window.navigator
+				.requestMIDIAccess()
+				.then(onMIDISuccess, onMIDIFailure);
 		};
 
 		const cancelMidiStuff = (): void => {
 			if (midi) {
+				midi.onstatechange = null;
 				midi.inputs.forEach((entry: any) => {
 					entry.onmidimessage = null;
 				});
 			}
-			initialized = false;
 		};
 
 		return { runMidiStuff, cancelMidiStuff };
@@ -126,7 +90,7 @@ const Controls: Component = () => {
 			<div class={styles.controlsGrid}>
 				<div
 					class={styles.controlsText}
-					style={{ "font-size": `${textSize()}px` }}
+					style={{ "font-size": `${store.dispSize}px` }}
 				>
 					<span>Volume</span>
 					<input
@@ -148,15 +112,15 @@ const Controls: Component = () => {
 
 				<div
 					class={styles.controlsText}
-					style={{ "font-size": `${textSize()}px` }}
+					style={{ "font-size": `${store.dispSize}px` }}
 				>
 					<span>Muted</span>
 					<label class={styles.toggleSwitch}>
 						<input
 							type="checkbox"
+							checked={store.muted}
 							on:change={() => {
-								setLocalMuted(!localMuted());
-								setMuted(localMuted());
+								setMuted(!store.muted);
 							}}
 						/>
 						<span class={styles.toggleKnob}></span>
@@ -165,16 +129,15 @@ const Controls: Component = () => {
 
 				<div
 					class={styles.controlsText}
-					style={{ "font-size": `${textSize()}px` }}
+					style={{ "font-size": `${store.dispSize}px` }}
 				>
 					<span>Sharps</span>
 					<label class={styles.toggleSwitch}>
 						<input
 							type="checkbox"
-							checked={localSharps()}
+							checked={store.sharps}
 							on:change={() => {
-								setLocalSharps(!localSharps());
-								setSharps(localSharps());
+								setSharps(!store.sharps);
 							}}
 						/>
 						<span class={styles.toggleKnob}></span>
@@ -183,7 +146,7 @@ const Controls: Component = () => {
 
 				<div
 					class={styles.controlsText}
-					style={{ "font-size": `${textSize()}px` }}
+					style={{ "font-size": `${store.dispSize}px` }}
 				>
 					<span>MIDI</span>
 					<label class={styles.toggleSwitch}>

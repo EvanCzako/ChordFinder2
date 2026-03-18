@@ -2,7 +2,7 @@ import { Component, createMemo, Show } from "solid-js";
 import { useStore } from "./storeProvider";
 import styles from "../styles/piano.module.css";
 
-const BlackKey: Component<{ note: string }> = (props: { note: string }) => {
+const BlackKey: Component<{ note: string }> = (props) => {
 	const [store, { addNotePressed, removeNotePressed }] = useStore();
 	const pressed = createMemo(() => {
 		return store.notesPressed.includes(props.note);

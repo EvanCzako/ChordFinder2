@@ -38,35 +38,25 @@ export function StoreProvider(props: any) {
 	});
 
 	const addNotePressed = (note: string) => {
-		const newNotesPressed = [...appState.notesPressed, note];
-		setAppState({ notesPressed: newNotesPressed });
-		audioUtils.refreshAudio(
-			newNotesPressed,
-			appState.volume,
-			appState.muted,
-		);
+		setAppState({ notesPressed: [...appState.notesPressed, note] });
+		audioUtils.addNoteAudio(note, appState.volume, appState.muted);
 	};
 
 	const removeNotePressed = (note: string) => {
-		let newNotesPressed = appState.notesPressed;
-		if (appState.notesPressed.includes(note)) {
-			const noteIdx = appState.notesPressed.indexOf(note);
-			newNotesPressed = [
+		const noteIdx = appState.notesPressed.indexOf(note);
+		if (noteIdx === -1) return;
+		setAppState({
+			notesPressed: [
 				...appState.notesPressed.slice(0, noteIdx),
 				...appState.notesPressed.slice(noteIdx + 1),
-			];
-			setAppState({ notesPressed: newNotesPressed });
-		}
-		audioUtils.refreshAudio(
-			newNotesPressed,
-			appState.volume,
-			appState.muted,
-		);
+			],
+		});
+		audioUtils.removeNoteAudio(note, appState.volume, appState.muted);
 	};
 
 	const clearAllNotes = () => {
 		setAppState({ notesPressed: [] });
-		audioUtils.refreshAudio([], appState.volume, appState.muted);
+		audioUtils.clearAudioNodes();
 	};
 
 	const adjustVolume = (volume: number) => {
