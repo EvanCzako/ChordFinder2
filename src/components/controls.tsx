@@ -82,11 +82,11 @@ const Controls: Component = () => {
 			<div class={styles.logoRow}>
 				<img class={styles.controlsLogo} src={MyImage} alt="ChordFinder" />
 				<a
-					href="https://evanczako.github.io/DoughLab2/"
+					href="https://evanczako.com"
 					rel="noopener noreferrer"
 					class={styles.backLink}
 				>
-					Back to Dough's Lab
+					Back to Bakery
 				</a>
 			</div>
 			<div class={styles.controlsGrid}>
